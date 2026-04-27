@@ -26,7 +26,7 @@
 	}
 	.intro {
 		max-width: 1280px;
-		margin: 0 auto var(--space-6);
+		margin: 0 auto var(--space-2);
 		padding: 0 var(--space-6);
 		display: flex;
 		flex-direction: column;
