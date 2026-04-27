@@ -415,7 +415,7 @@
 		border: 1px solid var(--line-hair);
 		border-left: 3px solid var(--branch-color);
 		border-radius: var(--radius-md);
-		padding: var(--space-6) var(--space-7);
+		padding: var(--space-3) var(--space-4);
 		opacity: 0;
 		transform: translateY(10px);
 		transition:
@@ -457,7 +457,7 @@
 	}
 	.v-commit h3 {
 		margin: 0;
-		font-size: var(--step-2);
+		font-size: var(--step-0);
 	}
 
 	@media (max-width: 819px) {
