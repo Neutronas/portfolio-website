@@ -11,7 +11,7 @@
 			"id": "computer",
 			"year": 1997,
 			"title": "First computer at age 3",
-			"body": "A beige box in the corner of the living room. I was small enough that the keyboard felt enormous, but the curiosity stuck — and hasn't left.",
+			"body": "A beige box in the corner of the room. I was small enough that the keyboard felt enormous, but the curiosity stuck — and hasn't left.",
 			"image": { "src": "", "alt": "Young Lukas with his first computer" }
 		},
 		{
@@ -30,20 +30,20 @@
 		{
 			"id": "servers",
 			"year": 2008,
-			"title": "Game servers and Linux at 14",
-			"body": "Counter-Strike, Team Fortress 2, Minecraft. Hosting for friends, breaking things for fun. Linux started as a side effect and became the point."
+			"title": "Game servers and Linux",
+			"body": "Counter-Strike, Team Fortress 2, Minecraft, San-Andreas. Hosting for friends, breaking things for fun. Linux started as a side effect and became the point."
 		},
 		{
 			"id": "kiberzona",
 			"year": 2010,
 			"title": "Admin at Kiberzona",
-			"body": "The biggest gaming community in Lithuania. Hundreds of players, thousands of tickets, a long education in how online people actually behave."
+			"body": "The biggest gaming community in Lithuania. Thousands of players, a long education in how online people actually behave. Creating websites, hosting servers."
 		},
 		{
 			"id": "esports",
 			"year": 2012,
 			"title": "Competitive Team Fortress 2",
-			"body": "Rocket jumps measured in milliseconds. National finals, European brackets, teammates who became lifelong friends. I played until I was 23.",
+			"body": "Top level player in Europe, representing national Lithuanian team, captain of national team, many teammates who became lifelong friends.",
 			"image": { "src": "", "alt": "TF2 competitive days" }
 		},
 		{
