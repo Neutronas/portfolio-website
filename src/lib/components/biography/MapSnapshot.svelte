@@ -81,14 +81,7 @@
 		aspect-ratio: 16 / 10;
 		border-radius: var(--radius-md);
 		border: 1px solid var(--line-hair);
-		background:
-			repeating-linear-gradient(
-				45deg,
-				var(--bg-night) 0,
-				var(--bg-night) 6px,
-				var(--line-hair) 6px,
-				var(--line-hair) 7px
-			);
+		background: var(--bg-wash, #f0ede8);
 		overflow: hidden;
 		opacity: 0;
 		transition: opacity 500ms var(--ease-out);
@@ -115,7 +108,7 @@
 	}
 	:global(.leaflet-container) {
 		font-family: var(--font-body) !important;
-		background: var(--bg-deep) !important;
+		background: #f0ede8 !important;
 	}
 	:global(.leaflet-control-attribution) {
 		background: rgba(255, 255, 255, 0.85) !important;

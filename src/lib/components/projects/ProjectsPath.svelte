@@ -180,10 +180,10 @@
 	.rail {
 		display: flex;
 		gap: var(--space-6);
-		padding: 0 max(var(--space-6), calc((100vw - 560px) / 2));
+		padding: 0 max(var(--space-6), calc((100vw - 380px) / 2));
 		overflow-x: auto;
 		scroll-snap-type: x mandatory;
-		scroll-padding: 0 max(var(--space-6), calc((100vw - 560px) / 2));
+		scroll-padding: 0 max(var(--space-6), calc((100vw - 380px) / 2));
 		-webkit-overflow-scrolling: touch;
 		scrollbar-width: none;
 	}

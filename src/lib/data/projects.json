@@ -17,11 +17,27 @@
 			"links": []
 		},
 		{
+			"id": "streamai",
+			"year": 2012,
+			"title": "StreamAI.lt",
+			"tags": ["community", "twitch"],
+			"summary": "Lithuanian Twitch streamer community (2012–2016). Filtered and promoted Lithuanian streamers to grow the local scene and make them more visible on Twitch.",
+			"links": []
+		},
+		{
 			"id": "saugia-lietuva",
 			"year": 2015,
 			"title": "Už saugią Lietuvą",
 			"tags": ["civic", "interactive"],
 			"summary": "Interactive survey system for the nationwide \"Už saugią Lietuvą\" campaign. Received a gratitude letter from President Dalia Grybauskaitė.",
+			"links": []
+		},
+		{
+			"id": "tf2-elo",
+			"year": 2019,
+			"title": "TF2 Elo System",
+			"tags": ["gaming", "elo", "tf2"],
+			"summary": "Elo ranking system for TF2 6v6 competitive teams. Ingested scrim and official match logs to compute ratings and rank teams by who they beat.",
 			"links": []
 		},
 		{

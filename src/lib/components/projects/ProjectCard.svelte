@@ -60,16 +60,16 @@
 <style>
 	.project {
 		flex: 0 0 auto;
-		width: min(86vw, 560px);
-		min-height: 460px;
+		width: min(76vw, 380px);
+		min-height: 320px;
 		scroll-snap-align: center;
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-4);
+		gap: var(--space-3);
 		background: var(--bg-paper);
 		border: 1px solid var(--line-hair);
 		border-radius: var(--radius-lg);
-		padding: var(--space-8);
+		padding: var(--space-6);
 		box-shadow:
 			0 1px 3px rgba(0, 0, 0, 0.05),
 			0 12px 32px -16px rgba(0, 0, 0, 0.08);
@@ -125,7 +125,7 @@
 	.title {
 		font-family: var(--font-display);
 		font-weight: 400;
-		font-size: var(--step-3);
+		font-size: var(--step-2);
 		margin: 0;
 		line-height: 1.12;
 		letter-spacing: -0.015em;
@@ -150,7 +150,7 @@
 	}
 	.summary {
 		font-family: var(--font-body);
-		font-size: var(--step-1);
+		font-size: var(--step-0);
 		color: var(--ink-soft);
 		margin: 0;
 		flex: 1;
