@@ -1,13 +1,12 @@
 {
 	"branches": [
 		{ "id": "work", "label": "Work", "color": "#6FC7DD" },
-		{ "id": "study", "label": "Studies", "color": "#D4B678" },
-		{ "id": "school", "label": "School", "color": "#A6B5CC" }
+		{ "id": "education", "label": "Education", "color": "#D4B678" }
 	],
 	"commits": [
 		{
 			"id": "school-grad",
-			"branch": "school",
+			"branch": "education",
 			"from": "2009-09",
 			"to": "2013-06",
 			"title": "Atžalynas Secondary School",
@@ -23,7 +22,7 @@
 		},
 		{
 			"id": "ktu-ba",
-			"branch": "study",
+			"branch": "education",
 			"from": "2013-09",
 			"to": "2017-06",
 			"title": "KTU — BSc in Informatics",
@@ -31,7 +30,7 @@
 		},
 		{
 			"id": "sourcery",
-			"branch": "study",
+			"branch": "education",
 			"from": "2016-02",
 			"to": "2016-05",
 			"title": "Sourcery Academy (Devbridge)",
@@ -47,7 +46,7 @@
 		},
 		{
 			"id": "ktu-ma",
-			"branch": "study",
+			"branch": "education",
 			"from": "2017-09",
 			"to": "2019-06",
 			"title": "KTU — MSc (Model-Based Fault Tree Analysis)",
