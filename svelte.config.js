@@ -1,6 +1,8 @@
 import adapter from '@sveltejs/adapter-static';
 import { relative, sep } from 'node:path';
 
+const base = process.env.BASE_PATH ?? '';
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	compilerOptions: {
@@ -12,6 +14,7 @@ const config = {
 		}
 	},
 	kit: {
+		paths: { base },
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',

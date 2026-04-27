@@ -1,12 +1,14 @@
-# ruzauskas2
+# Lukas Ruzauskas — Portfolio Website
 
-A premium, scroll-driven personal site for Lukas Ruzauskas. Three paths — Careers, Biography, Projects — each rendered as a distinct interactive experience, all from a single static page.
+Personal portfolio site live at [ruzauskas.lt](https://ruzauskas.lt). A scroll-driven single-page experience split into three interactive paths: **Careers**, **Biography**, and **Projects**.
+
+Built with SvelteKit + Svelte 5 (runes), GSAP scroll animations, and Leaflet maps. Deployed automatically to GitHub Pages on every push to `main`.
 
 ---
 
-## Editing content (no code required)
+## Editing content
 
-All copy lives in JSON files under [`src/lib/data/`](./src/lib/data/). Edit the file, save, and the page updates. Commit when happy.
+All copy lives in JSON files under [`src/lib/data/`](./src/lib/data/) — no code changes needed.
 
 | File | What's in it |
 |---|---|
@@ -15,16 +17,16 @@ All copy lives in JSON files under [`src/lib/data/`](./src/lib/data/). Edit the 
 | `biography.json` | Ordered life milestones, optional map coords per entry |
 | `projects.json` | Chronological list of projects with tags + links |
 
-### Adding a career commit
+### Adding a career entry
 
 ```jsonc
 {
   "id": "unique-slug",
-  "branch": "work", // one of: school | study | work | academia
+  "branch": "work",          // school | study | work | academia
   "from": "2024-03",
-  "to": "2025-11",  // or null if ongoing
+  "to": "2025-11",           // null = ongoing
   "title": "Company — Role",
-  "summary": "Optional one-liner explaining the work."
+  "summary": "Optional one-liner."
 }
 ```
 
@@ -37,7 +39,7 @@ All copy lives in JSON files under [`src/lib/data/`](./src/lib/data/). Edit the 
   "title": "What happened",
   "body": "Short paragraph.",
   "map": { "lat": 54.898, "lng": 23.904, "zoom": 11, "label": "Kaunas" }
-  // Omit "map" (or set to null) if this milestone has no location.
+  // Omit "map" if no location.
 }
 ```
 
@@ -49,96 +51,87 @@ All copy lives in JSON files under [`src/lib/data/`](./src/lib/data/). Edit the 
   "year": 2024,
   "title": "Project name",
   "tags": ["tag", "tag"],
-  "summary": "One or two sentences about what it is.",
-  "links": [
-    { "label": "GitHub", "href": "https://..." }
-  ]
+  "summary": "One or two sentences.",
+  "links": [{ "label": "GitHub", "href": "https://..." }]
 }
 ```
 
-### Branding
+### Styling
 
-Colors, type scale and spacing are CSS custom properties in [`src/app.css`](./src/app.css). The single accent (`--accent-bronze`) shows up across every path.
+Design tokens (colors, type scale, spacing) are CSS custom properties in [`src/app.css`](./src/app.css). The bronze accent (`--accent-bronze`) runs across all three paths.
 
 ---
 
 ## Development
 
+Requirements: **Node 20+**, **npm 10+**
+
 ```bash
 npm install
-npm run dev          # http://localhost:5173
-npm run check        # TypeScript + Svelte type-check
-npm run build        # static output in build/
-npm run preview      # serve build/ locally
+npm run dev        # http://localhost:5173
+npm run check      # TypeScript + Svelte type-check
+npm run build      # static output → build/
+npm run preview    # serve build/ locally
 ```
-
-Requirements: Node 20+, npm 10+.
 
 ---
 
 ## Deployment
 
-`npm run build` produces a plain static `build/` folder. It works on any static host:
+Pushes to `main` automatically build and deploy to GitHub Pages via the workflow in [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml). The live URL is [ruzauskas.lt](https://ruzauskas.lt).
 
-- **Netlify** — drag `build/` onto [Netlify Drop](https://app.netlify.com/drop), or point Netlify at this repo (build command `npm run build`, publish directory `build`).
-- **Vercel** — connect the repo; Vercel detects SvelteKit automatically.
-- **Cloudflare Pages** — build command `npm run build`, output directory `build`.
-- **GitHub Pages** — push `build/` to the `gh-pages` branch, or use an Action.
+### Custom domain
 
-A single-page app fallback (`index.html`) is included so hash-based deep links (`#careers`, `#biography`, `#projects`) work from a cold load on any host.
+The `static/CNAME` file points GitHub Pages to `ruzauskas.lt`. DNS setup required at your registrar:
 
-### Social preview image
+| Type | Name | Value |
+|---|---|---|
+| `A` | `@` | `185.199.108.153` |
+| `A` | `@` | `185.199.109.153` |
+| `A` | `@` | `185.199.110.153` |
+| `A` | `@` | `185.199.111.153` |
+| `CNAME` | `www` | `neutronas.github.io` |
 
-Optional. Drop a 1200×630 JPG into `static/og.jpg` — it's already referenced from `<meta property="og:image">`. Without it, the build just warns (not errors).
+### Social preview
+
+Drop a 1200×630 JPG into `static/og.jpg` — already referenced by `<meta property="og:image">`.
 
 ---
 
-## Architecture at a glance
+## Stack
+
+- **SvelteKit 2** + **Svelte 5** (runes) + `@sveltejs/adapter-static`
+- **GSAP 3** + ScrollTrigger — lazy-loaded per path
+- **Leaflet 1.9** + CartoDB Positron tiles — lazy-loaded near viewport
+- `@fontsource-variable/fraunces` (display) + `@fontsource-variable/inter` (body)
+- TypeScript, fully prerendered to static HTML
+
+## Architecture
 
 ```
 src/
 ├── routes/
-│   ├── +layout.svelte     Fonts, skip-link shell
-│   ├── +layout.ts         prerender = true; ssr = true
-│   └── +page.svelte       Single page; picks path from appState
-├── lib/
-│   ├── data/*.json        All editable content
-│   ├── components/
-│   │   ├── Hero.svelte
-│   │   ├── PathSelector.svelte
-│   │   ├── PathNav.svelte
-│   │   ├── careers/
-│   │   │   ├── CareersPath.svelte
-│   │   │   └── GitGraph.svelte   Custom SVG
-│   │   ├── biography/
-│   │   │   ├── BiographyPath.svelte   GSAP pin + horizontal scrub
-│   │   │   ├── MilestoneCard.svelte
-│   │   │   └── MapSnapshot.svelte     Lazy Leaflet
-│   │   ├── projects/
-│   │   │   ├── ProjectsPath.svelte    Snap-scroll carousel
-│   │   │   └── ProjectCard.svelte
-│   │   ├── ending/
-│   │   │   └── WhatsNext.svelte       "?" + email + replay
-│   │   └── ui/            Reveal, ScrollHint, MetalDivider
-│   ├── stores/
-│   │   └── path.svelte.ts  Runes state + URL-hash sync
-│   └── utils/
-│       ├── gsap.ts         Lazy GSAP + ScrollTrigger
-│       └── leaflet.ts      Lazy Leaflet + CartoDB tiles
-└── app.css                 Design tokens (Ivory & Ink)
+│   ├── +layout.svelte        fonts, skip-link shell
+│   ├── +layout.ts            prerender = true
+│   └── +page.svelte          single page; path driven by appState
+└── lib/
+    ├── data/*.json            all editable content
+    ├── components/
+    │   ├── Hero.svelte
+    │   ├── PathSelector.svelte
+    │   ├── PathNav.svelte
+    │   ├── careers/           GitGraph SVG + CareersPath
+    │   ├── biography/         GSAP pin + horizontal scrub + Leaflet maps
+    │   ├── projects/          snap-scroll carousel
+    │   ├── ending/            WhatsNext ("?" + email + replay)
+    │   └── ui/                Reveal, ScrollHint, MetalDivider
+    ├── stores/path.svelte.ts  runes state + URL-hash sync
+    └── utils/                 lazy GSAP + lazy Leaflet loaders
 ```
 
-### Stack
+### Accessibility
 
-- SvelteKit 2 + Svelte 5 (runes) + `@sveltejs/adapter-static`
-- GSAP 3 + ScrollTrigger (dynamically imported per-path)
-- Leaflet 1.9 + CartoDB Positron tiles (dynamically imported when a map card is near viewport)
-- `@fontsource-variable/fraunces` (display) + `@fontsource-variable/inter` (body) — self-hosted
-- TypeScript, prerendered to static HTML
-
-### Motion & accessibility
-
-- `prefers-reduced-motion: reduce` removes scroll-scrubbed animations; content flows normally.
-- Desktop Biography uses pinned horizontal scroll; below 820px it collapses to a vertical stack.
-- Careers graph renders as SVG on desktop, as a vertical card list on mobile.
-- Keyboard: arrow keys advance/rewind the Projects carousel. Skip-to-content link at top. Bronze focus rings.
+- `prefers-reduced-motion` removes scroll animations; content still flows.
+- Biography horizontal scroll collapses to vertical stack below 820 px.
+- Careers graph switches to vertical card list on mobile.
+- Arrow keys navigate the Projects carousel. Skip-to-content link + bronze focus rings throughout.
