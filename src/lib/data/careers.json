@@ -1,0 +1,89 @@
+{
+	"branches": [
+		{ "id": "work", "label": "Work", "color": "#6FC7DD" },
+		{ "id": "study", "label": "Studies", "color": "#D4B678" },
+		{ "id": "school", "label": "School", "color": "#A6B5CC" }
+	],
+	"commits": [
+		{
+			"id": "school-grad",
+			"branch": "school",
+			"from": "2009-09",
+			"to": "2013-06",
+			"title": "Atžalynas Secondary School",
+			"summary": "Graduated with a GPA of 9.8/10."
+		},
+		{
+			"id": "digimedia",
+			"branch": "work",
+			"from": "2013-09",
+			"to": "2015-08",
+			"title": "Digimedia — Web & Server Administrator",
+			"summary": "First tech job — volunteered at a Lithuanian gaming portal administering game servers and building web tooling during my first year of university."
+		},
+		{
+			"id": "ktu-ba",
+			"branch": "study",
+			"from": "2013-09",
+			"to": "2017-06",
+			"title": "KTU — BSc in Informatics",
+			"summary": "Bachelor's degree in Information Technology at Kaunas University of Technology."
+		},
+		{
+			"id": "sourcery",
+			"branch": "study",
+			"from": "2016-02",
+			"to": "2016-05",
+			"title": "Sourcery Academy (Devbridge)",
+			"summary": "React.js + Redux, ASP.NET Core 1.0, Entity Framework 7."
+		},
+		{
+			"id": "es4b",
+			"branch": "work",
+			"from": "2016-09",
+			"to": "2018-03",
+			"title": "ES4B — Web Developer",
+			"summary": "Full-stack work on CRMs, e-shops, integrations and custom websites while finishing my bachelor's."
+		},
+		{
+			"id": "ktu-ma",
+			"branch": "study",
+			"from": "2017-09",
+			"to": "2019-06",
+			"title": "KTU — MSc (Model-Based Fault Tree Analysis)",
+			"summary": "Master's thesis: Model Based Fault Tree Analysis (FTA). Graduated with honours."
+		},
+		{
+			"id": "ktu-aa",
+			"branch": "work",
+			"from": "2017-09",
+			"to": "2020-06",
+			"title": "KTU — Academic Assistant",
+			"summary": "Lectured workshops; taught relational databases and PHP."
+		},
+		{
+			"id": "dassault",
+			"branch": "work",
+			"from": "2018-09",
+			"to": null,
+			"title": "Dassault Systèmes — Product Owner / Systems Analyst",
+			"summary": "Current role: requirements, architecture, feature planning, documentation and customer support for CATIA Magic / MagicDraw."
+		},
+		{
+			"id": "ppm",
+			"branch": "work",
+			"from": "2020-05",
+			"to": "2021-12",
+			"title": "PPM — React Developer",
+			"summary": "React web applications."
+		},
+		{
+			"id": "isystem",
+			"branch": "work",
+			"from": "2022-01",
+			"to": "2023-12",
+			"title": "iSystem — Software Developer",
+			"summary": "Product tools management system (TypeScript, React, Nest.js, NX)."
+		}
+	]
+}

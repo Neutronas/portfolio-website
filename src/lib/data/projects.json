@@ -1,0 +1,106 @@
+{
+	"projects": [
+		{
+			"id": "cskampas",
+			"year": 2009,
+			"title": "CSKampas gaming servers",
+			"tags": ["community", "servers"],
+			"summary": "Hosting and administering Counter-Strike servers during school years. First taste of running production systems.",
+			"links": []
+		},
+		{
+			"id": "kiberzona",
+			"year": 2010,
+			"title": "Kiberzona — Minecraft community admin",
+			"tags": ["community", "minecraft"],
+			"summary": "One of the administrators of Lithuania's biggest gaming community at the time, running and maintaining its Minecraft server ecosystem.",
+			"links": []
+		},
+		{
+			"id": "saugia-lietuva",
+			"year": 2015,
+			"title": "Už saugią Lietuvą",
+			"tags": ["civic", "interactive"],
+			"summary": "Interactive survey system for the nationwide \"Už saugią Lietuvą\" campaign. Received a gratitude letter from President Dalia Grybauskaitė.",
+			"links": []
+		},
+		{
+			"id": "mentorship-portal",
+			"year": 2020,
+			"title": "Mentorship Portal",
+			"tags": ["react", "team"],
+			"summary": "Team project: a portal for finding mentors and mentees. React, Redux, Saga, Nx, Material-UI, Storybook.",
+			"links": [
+				{ "label": "GitHub", "href": "https://github.com/ppm-jew9207/PPM-back-end-nest-js" }
+			]
+		},
+		{
+			"id": "portfolio-gatsby",
+			"year": 2020,
+			"title": "Gatsby Portfolio",
+			"tags": ["gatsby", "portfolio"],
+			"summary": "Earlier iteration of the portfolio built with Gatsby and Contentful CMS.",
+			"links": []
+		},
+		{
+			"id": "warsaw-restaurants",
+			"year": 2020,
+			"title": "Restaurants in Warsaw",
+			"tags": ["react-native", "mobile"],
+			"summary": "Mobile app for finding restaurants via the Yelp API. Published to Google Play.",
+			"links": []
+		},
+		{
+			"id": "restaurant-demo",
+			"year": 2021,
+			"title": "Restaurant Demo",
+			"tags": ["next.js", "strapi"],
+			"summary": "Template restaurant website with a Strapi CMS backend, containerised with Docker.",
+			"links": [
+				{ "label": "GitHub", "href": "https://github.com/Neutronas/restaurant-demo-frontend" }
+			]
+		},
+		{
+			"id": "dota-bot",
+			"year": 2021,
+			"title": "Discord Bot for Dota 2",
+			"tags": ["discord", "api"],
+			"summary": "Tracks Dota 2 matches and posts score notifications to Discord via the Steam API.",
+			"links": [
+				{ "label": "GitHub", "href": "https://github.com/Neutronas/Discord-bot-for-dota" }
+			]
+		},
+		{
+			"id": "guess-drawing",
+			"year": 2022,
+			"title": "Guess a Drawing",
+			"tags": ["hackathon", "canvas"],
+			"summary": "24-hour hackathon multiplayer draw-and-guess game.",
+			"links": [{ "label": "GitHub", "href": "https://github.com/demings/kreidele" }]
+		},
+		{
+			"id": "lt-wordle",
+			"year": 2022,
+			"title": "Lithuanian Wordle",
+			"tags": ["next.js", "game"],
+			"summary": "A Lithuanian word-guessing game inspired by Wordle.",
+			"links": [{ "label": "Live", "href": "https://zodis.ruzauskas.eu" }]
+		},
+		{
+			"id": "ardauzta",
+			"year": 2026,
+			"title": "Ardauzta / Autopatikra",
+			"tags": ["saas", "ai"],
+			"summary": "AI-powered car condition analysis for Lithuanian listings — analyses photos for paint, body, rust, accidents, glass and interior. SaaS with Stripe billing.",
+			"links": []
+		},
+		{
+			"id": "scankaunas",
+			"year": 2025,
+			"title": "ScanKaunas",
+			"tags": ["next.js", "supabase", "game"],
+			"summary": "City exploration game for Kaunas — scan QR codes for facts, audio and secrets. Achievements, leaderboard, admin panel, LT/EN.",
+			"links": []
+		}
+	]
+}

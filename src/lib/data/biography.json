@@ -1,0 +1,64 @@
+{
+	"milestones": [
+		{
+			"id": "birth",
+			"year": 1994,
+			"title": "Born in Kaišiadorys",
+			"body": "A small town in central Lithuania — quiet streets, the sound of trains at dusk. Every story needs a starting point; this one starts here.",
+			"map": { "lat": 54.862, "lng": 24.458, "zoom": 11, "label": "Kaišiadorys" }
+		},
+		{
+			"id": "computer",
+			"year": 1997,
+			"title": "First computer at age 3",
+			"body": "A beige box in the corner of the living room. I was small enough that the keyboard felt enormous, but the curiosity stuck — and hasn't left.",
+			"image": { "src": "", "alt": "Young Lukas with his first computer" }
+		},
+		{
+			"id": "kaunas",
+			"year": 1999,
+			"title": "Moved to Kaunas",
+			"body": "A bigger city, bigger sky. New streets to learn, new windows to look out of. Kaunas quickly stopped feeling new.",
+			"map": { "lat": 54.898, "lng": 23.904, "zoom": 11, "label": "Kaunas" }
+		},
+		{
+			"id": "html",
+			"year": 2005,
+			"title": "First websites at age 11",
+			"body": "HTML by view-source, one more <div> at midnight. No tutorials, just patience and the refresh button. That's where it clicked."
+		},
+		{
+			"id": "servers",
+			"year": 2008,
+			"title": "Game servers and Linux at 14",
+			"body": "Counter-Strike, Team Fortress 2, Minecraft. Hosting for friends, breaking things for fun. Linux started as a side effect and became the point."
+		},
+		{
+			"id": "kiberzona",
+			"year": 2010,
+			"title": "Admin at Kiberzona",
+			"body": "The biggest gaming community in Lithuania. Hundreds of players, thousands of tickets, a long education in how online people actually behave."
+		},
+		{
+			"id": "esports",
+			"year": 2012,
+			"title": "Competitive Team Fortress 2",
+			"body": "Rocket jumps measured in milliseconds. National finals, European brackets, teammates who became lifelong friends. I played until I was 23.",
+			"image": { "src": "", "alt": "TF2 competitive days" }
+		},
+		{
+			"id": "married",
+			"year": 2022,
+			"title": "Got married",
+			"body": "The best teammate I've ever had, now officially on the roster for good.",
+			"image": { "src": "", "alt": "Wedding day" }
+		},
+		{
+			"id": "rokas",
+			"year": 2023,
+			"title": "Son Rokas was born",
+			"body": "A small human joined the team. Suddenly the scale of everything changes — and the best project on the list has no deadline.",
+			"image": { "src": "", "alt": "Baby Rokas" }
+		}
+	]
+}

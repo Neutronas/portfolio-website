@@ -1,0 +1,9 @@
+{
+	"name": "Lukas Ruzauskas",
+	"tagline": "Software developer & systems analyst",
+	"email": "lukas.ruzauskas@gmail.com",
+	"links": [
+		{ "label": "GitHub", "href": "https://github.com/Neutronas" },
+		{ "label": "LinkedIn", "href": "https://linkedin.com/in/lukas-ruzauskas/" }
+	]
+}
