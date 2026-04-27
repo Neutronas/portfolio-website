@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ruzauskas.lt/sitemap.xml

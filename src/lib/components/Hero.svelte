@@ -23,7 +23,7 @@
 	<p class="eyebrow">A portfolio in three paths</p>
 
 	<h1 class="name">
-		Hi, I'm <span class="highlight">{contacts.name}</span>.
+		Hi, I'm <span class="highlight">{contacts.displayName}</span>.
 	</h1>
 
 	<p class="tagline">{contacts.tagline}.</p>

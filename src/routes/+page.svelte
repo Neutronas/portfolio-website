@@ -22,7 +22,7 @@
 
 <script module lang="ts">
 	const titles = {
-		null: 'a life in three paths',
+		null: 'Software Developer & Systems Analyst',
 		careers: 'Careers — the branching timeline',
 		biography: 'Biography — time travel',
 		projects: 'Projects — everything worth remembering'
@@ -33,7 +33,7 @@
 	<title>{contacts.name} — {titles[appState.path ?? 'null']}</title>
 	<meta
 		name="description"
-		content="{contacts.name} — {contacts.tagline}. A scroll-driven portfolio told as careers, biography and projects."
+		content="Portfolio of {contacts.name} — {contacts.tagline} based in Lithuania. Careers, biography and projects in one scroll-driven experience."
 	/>
 </svelte:head>
 
