@@ -126,12 +126,12 @@
 	.social-links {
 		display: flex;
 		align-items: center;
-		gap: var(--space-5);
+		gap: var(--space-8);
 	}
 	.social-link {
 		font-family: var(--font-body);
-		font-size: var(--step--2);
-		letter-spacing: 0.22em;
+		font-size: var(--step--3);
+		letter-spacing: 0.28em;
 		text-transform: uppercase;
 		color: var(--ink-mute);
 		background-image: none;
