@@ -13,7 +13,7 @@
 
 	<div class="portrait">
 		<PhotoPlaceholder
-			src=""
+			src="/img/lukas.jpg"
 			alt="Portrait of {contacts.name}"
 			aspect="1 / 1"
 			icon="portrait"
