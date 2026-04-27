@@ -268,7 +268,7 @@
 				<!-- Commits -->
 				{#each commitsWithGeom as c (c.id)}
 					<g class="commit" data-id={c.id}>
-						<title>{c.title} · {formatRange(c.from, c.to)}{c.summary ? '\n' + c.summary : ''}</title>
+						<title>{c.title}{c.isOngoing ? ' (current)' : ''} · {formatRange(c.from, c.to)}</title>
 						<!-- Connector from capsule down to time axis, at the "from" point (right side) -->
 						<path
 							d="M {c.xFrom} {c.y} C {c.xFrom} {(c.y + timelineY) / 2}, {c.xFrom} {timelineY - 16}, {c.xFrom} {timelineY}"
@@ -314,7 +314,7 @@
 							fill="var(--ink-deep)"
 							text-anchor="middle"
 						>
-							{c.title}
+							{c.title}{c.isOngoing ? ' (current)' : ''}
 						</text>
 					</g>
 				{/each}
@@ -334,10 +334,7 @@
 					<span class="v-branch">{c.branchLabel}</span>
 					<span class="v-dates">{formatRange(c.from, c.to)}</span>
 				</header>
-				<h3>{c.title}</h3>
-				{#if c.summary}
-					<p>{c.summary}</p>
-				{/if}
+				<h3>{c.title}{c.isOngoing ? ' (current)' : ''}</h3>
 			</li>
 		{/each}
 	</ul>
@@ -459,12 +456,8 @@
 		text-transform: none;
 	}
 	.v-commit h3 {
-		margin: 0 0 var(--space-2);
-		font-size: var(--step-2);
-	}
-	.v-commit p {
 		margin: 0;
-		color: var(--ink-soft);
+		font-size: var(--step-2);
 	}
 
 	@media (max-width: 819px) {
