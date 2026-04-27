@@ -5,15 +5,15 @@
 			"year": 2009,
 			"title": "CSKampas gaming servers",
 			"tags": ["community", "servers"],
-			"summary": "Hosting and administering Counter-Strike servers during school years. First taste of running production systems.",
+			"summary": "Hosting and administering Counter-Strike servers and websites during school years. First taste of running production systems.",
 			"links": []
 		},
 		{
 			"id": "kiberzona",
 			"year": 2010,
-			"title": "Kiberzona — Minecraft community admin",
+			"title": "Kiberzona admin",
 			"tags": ["community", "minecraft"],
-			"summary": "One of the administrators of Lithuania's biggest gaming community at the time, running and maintaining its Minecraft server ecosystem.",
+			"summary": "One of the administrators of Lithuania's biggest gaming community at the time, running and maintaining its servers and websites ecosystem: Minecraft, Counter-Strike:Source, Team Fortress 2, GTA San Andreas and others.",
 			"links": []
 		},
 		{
@@ -41,21 +41,11 @@
 			"links": []
 		},
 		{
-			"id": "mentorship-portal",
-			"year": 2020,
-			"title": "Mentorship Portal",
-			"tags": ["react", "team"],
-			"summary": "Team project: a portal for finding mentors and mentees. React, Redux, Saga, Nx, Material-UI, Storybook.",
-			"links": [
-				{ "label": "GitHub", "href": "https://github.com/ppm-jew9207/PPM-back-end-nest-js" }
-			]
-		},
-		{
 			"id": "portfolio-gatsby",
 			"year": 2020,
 			"title": "Gatsby Portfolio",
 			"tags": ["gatsby", "portfolio"],
-			"summary": "Earlier iteration of the portfolio built with Gatsby and Contentful CMS.",
+			"summary": "Earlier iteration of the portfolio built with Gatsby, Contentful CMS (GraphQL).",
 			"links": []
 		},
 		{
@@ -101,15 +91,7 @@
 			"tags": ["next.js", "game"],
 			"summary": "A Lithuanian word-guessing game inspired by Wordle.",
 			"links": [{ "label": "Live", "href": "https://zodis.ruzauskas.eu" }]
-		},
-		{
-			"id": "ardauzta",
-			"year": 2026,
-			"title": "Ardauzta / Autopatikra",
-			"tags": ["saas", "ai"],
-			"summary": "AI-powered car condition analysis for Lithuanian listings — analyses photos for paint, body, rust, accidents, glass and interior. SaaS with Stripe billing.",
-			"links": []
-		},
+		}
 		{
 			"id": "scankaunas",
 			"year": 2025,
