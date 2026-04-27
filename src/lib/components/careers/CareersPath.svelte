@@ -10,11 +10,6 @@
 		<Reveal>
 			<p class="eyebrow">Careers</p>
 			<h2>The branching timeline.</h2>
-			<p class="lede">
-				Three lanes — <em>school</em>, <em>studies</em>, <em>work</em>. Scroll — the timeline
-				moves. Newest first, then further and further back. Some commits ran in parallel. One
-				is still open.
-			</p>
 		</Reveal>
 	</header>
 
