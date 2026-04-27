@@ -91,7 +91,7 @@
 			"tags": ["next.js", "game"],
 			"summary": "A Lithuanian word-guessing game inspired by Wordle.",
 			"links": [{ "label": "Live", "href": "https://zodis.ruzauskas.eu" }]
-		}
+		},
 		{
 			"id": "scankaunas",
 			"year": 2025,

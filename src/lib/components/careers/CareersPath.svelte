@@ -48,14 +48,5 @@
 		margin: 0 0 var(--space-4);
 		letter-spacing: -0.02em;
 	}
-	.lede {
-		font-family: var(--font-body);
-		color: var(--ink-soft);
-		max-width: 58ch;
-		margin: 0;
-	}
-	em {
-		font-style: italic;
-		color: var(--ink-deep);
-	}
+
 </style>
