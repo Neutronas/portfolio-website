@@ -403,9 +403,9 @@
 	.vertical-list {
 		display: none;
 		flex-direction: column;
-		gap: var(--space-4);
+		gap: var(--space-6);
 		list-style: none;
-		padding: 0 var(--space-4);
+		padding: var(--space-6) var(--space-6);
 		margin: 0;
 		max-width: 680px;
 		margin-inline: auto;
@@ -415,7 +415,7 @@
 		border: 1px solid var(--line-hair);
 		border-left: 3px solid var(--branch-color);
 		border-radius: var(--radius-md);
-		padding: var(--space-5) var(--space-6);
+		padding: var(--space-6) var(--space-7);
 		opacity: 0;
 		transform: translateY(10px);
 		transition:
