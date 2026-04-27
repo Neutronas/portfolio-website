@@ -28,6 +28,12 @@
 
 	<p class="tagline">{contacts.tagline}.</p>
 
+	<nav class="social-links" aria-label="Social links">
+		{#each contacts.links as link}
+			<a href={link.href} target="_blank" rel="noopener" class="social-link">{link.label}</a>
+		{/each}
+	</nav>
+
 	<div class="scroll-cue">
 		<ScrollHint />
 	</div>
@@ -116,6 +122,23 @@
 	}
 	.portrait :global(.photo) {
 		border-radius: 50%;
+	}
+	.social-links {
+		display: flex;
+		align-items: center;
+		gap: var(--space-5);
+	}
+	.social-link {
+		font-family: var(--font-body);
+		font-size: var(--step--2);
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--ink-mute);
+		background-image: none;
+		transition: color var(--dur-med) var(--ease-out);
+	}
+	.social-link:hover {
+		color: var(--accent-bronze);
 	}
 	.scroll-cue {
 		margin-top: var(--space-12);
