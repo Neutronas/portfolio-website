@@ -90,11 +90,11 @@
 	.name {
 		font-family: var(--font-display);
 		font-weight: 400;
-		font-size: var(--step-5);
+		font-size: clamp(1.75rem, 4vw, var(--step-5));
 		line-height: 1.05;
 		letter-spacing: -0.02em;
 		margin: 0;
-		max-width: 16ch;
+		white-space: nowrap;
 	}
 	.highlight {
 		font-style: italic;

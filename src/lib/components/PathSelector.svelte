@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { pickPath, type Path } from '$lib/stores/path.svelte';
+	import type { Path } from '$lib/stores/path.svelte';
 	import Reveal from './ui/Reveal.svelte';
 
 	type Option = {
@@ -53,10 +53,10 @@
 	<div class="cards">
 		{#each options as opt, i (opt.id)}
 			<Reveal delay={120 + i * 100}>
-				<button
+				<a
+					href="/{opt.id}/"
 					class="card"
 					aria-label="Choose the {opt.label} path"
-					onclick={() => pickPath(opt.id)}
 				>
 					<span class="glyph" aria-hidden="true">
 						{#if opt.glyph === 'careers'}
@@ -103,7 +103,7 @@
 							/>
 						</svg>
 					</span>
-				</button>
+				</a>
 			</Reveal>
 		{/each}
 	</div>
@@ -160,10 +160,12 @@
 		gap: var(--space-3);
 		padding: var(--space-8);
 		background: var(--bg-paper);
+		background-image: none;
 		border: 1px solid var(--line-hair);
 		border-radius: var(--radius-lg);
 		color: var(--ink-deep);
 		cursor: pointer;
+		text-decoration: none;
 		transition:
 			transform var(--dur-med) var(--ease-out),
 			border-color var(--dur-med) var(--ease-out),

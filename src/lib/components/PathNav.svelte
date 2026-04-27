@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { appState, resetPath } from '$lib/stores/path.svelte';
+	import { page } from '$app/state';
 
 	const labels: Record<string, string> = {
-		careers: 'Careers',
-		biography: 'Biography',
-		projects: 'Projects'
+		'/careers/': 'Careers',
+		'/biography/': 'Biography',
+		'/projects/': 'Projects'
 	};
 </script>
 
-{#if appState.path}
+{#if page.url.pathname !== '/'}
 	<nav class="path-nav" aria-label="Path navigation">
-		<button class="back" onclick={resetPath}>
+		<a href="/" class="back">
 			<svg viewBox="0 0 16 10" class="arrow">
 				<path
 					d="M15 5 H2 M6 1 L2 5 L6 9"
@@ -22,10 +22,10 @@
 				/>
 			</svg>
 			<span>Paths</span>
-		</button>
+		</a>
 		<span class="crumb">
 			<span class="crumb-label">You are on</span>
-			<span class="crumb-path">{labels[appState.path]}</span>
+			<span class="crumb-path">{labels[page.url.pathname] ?? ''}</span>
 		</span>
 	</nav>
 {/if}
@@ -60,11 +60,15 @@
 		border-radius: 999px;
 		border: 1px solid transparent;
 		background: transparent;
+		background-image: none;
 		color: var(--ink-deep);
 		cursor: pointer;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 		font-weight: 500;
+		transition:
+			border-color var(--dur-med) var(--ease-out),
+			color var(--dur-med) var(--ease-out);
 	}
 	.back:hover {
 		border-color: var(--accent-bronze);

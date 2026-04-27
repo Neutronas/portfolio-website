@@ -1,6 +1,6 @@
 <script lang="ts">
 	import contacts from '$lib/data/contacts.json';
-	import { resetPath, pickPath, type Path } from '$lib/stores/path.svelte';
+	import type { Path } from '$lib/stores/path.svelte';
 	import Reveal from '../ui/Reveal.svelte';
 
 	let { path = 'careers' }: { path?: Path } = $props();
@@ -81,11 +81,9 @@
 			<p class="rewind-label">Or take another path</p>
 			<div class="rewind-buttons">
 				{#each others as o (o.id)}
-					<button onclick={() => pickPath(o.id)}>
-						{o.label}
-					</button>
+					<a href="/{o.id}/" class="path-link">{o.label}</a>
 				{/each}
-				<button class="restart" onclick={resetPath}>Back to start</button>
+				<a href="/" class="path-link restart">Back to start</a>
 			</div>
 		</div>
 	</Reveal>
@@ -183,7 +181,30 @@
 		flex-wrap: wrap;
 		justify-content: center;
 	}
+	.path-link {
+		font-family: var(--font-body);
+		font-size: var(--step--1);
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--ink-deep);
+		background-image: none;
+		padding: 0.4rem 0.9rem;
+		border: 1px solid var(--line-hair);
+		border-radius: 999px;
+		transition:
+			border-color var(--dur-med) var(--ease-out),
+			color var(--dur-med) var(--ease-out);
+	}
+	.path-link:hover {
+		border-color: var(--accent-bronze);
+		color: var(--accent-bronze);
+	}
 	.restart {
+		color: var(--ink-mute);
+		border-color: transparent;
+	}
+	.restart:hover {
+		border-color: var(--line-hair);
 		color: var(--ink-mute);
 	}
 </style>
