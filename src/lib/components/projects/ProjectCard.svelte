@@ -59,10 +59,8 @@
 
 <style>
 	.project {
-		flex: 0 0 auto;
-		width: min(76vw, 380px);
-		min-height: 320px;
-		scroll-snap-align: center;
+		width: 100%;
+		min-height: 280px;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-3);

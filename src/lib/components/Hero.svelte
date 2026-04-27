@@ -110,7 +110,7 @@
 		font-size: var(--step-1);
 		color: var(--ink-soft);
 		margin: 0;
-		max-width: 38ch;
+		max-width: 70ch;
 	}
 	.portrait {
 		width: min(180px, 40vw);
