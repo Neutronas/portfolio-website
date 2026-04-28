@@ -10,7 +10,13 @@
 			"from": "2009-09",
 			"to": "2013-06",
 			"title": "Atžalynas Secondary School",
-			"summary": "Graduated with a GPA of 9.8/10."
+			"summary": "Graduated with a GPA of 9.8/10.",
+			"tooltip": {
+				"details": [
+					"Graduated with a GPA of 9.8/10",
+					"Strong focus on mathematics, physics and computer science"
+				]
+			}
 		},
 		{
 			"id": "digimedia",
@@ -18,7 +24,15 @@
 			"from": "2013-09",
 			"to": "2015-08",
 			"title": "Digimedia — Web & Server Administrator",
-			"summary": "First tech job — volunteered at a Lithuanian gaming portal administering game servers and building web tooling during my first year of university."
+			"summary": "First tech job — volunteered at a Lithuanian gaming portal administering game servers and building web tooling during my first year of university.",
+			"tooltip": {
+				"details": [
+					"Volunteered at a Lithuanian gaming portal while starting university",
+					"Managed and maintained multiplayer game servers",
+					"Built internal web tooling and automation scripts for portal administration"
+				],
+				"tech": ["PHP", "HTML/CSS", "Linux", "Game server administration"]
+			}
 		},
 		{
 			"id": "ktu-ba",
@@ -26,7 +40,14 @@
 			"from": "2013-09",
 			"to": "2017-06",
 			"title": "KTU — BSc in Informatics",
-			"summary": "Bachelor's degree in Information Technology at Kaunas University of Technology."
+			"summary": "Bachelor's degree in Information Technology at Kaunas University of Technology.",
+			"tooltip": {
+				"details": [
+					"Bachelor's degree in Information Technology at Kaunas University of Technology",
+					"Covered software engineering, databases, algorithms, networking and computer architecture",
+					"Gained a broad foundation in both theory and applied engineering"
+				]
+			}
 		},
 		{
 			"id": "sourcery",
@@ -34,7 +55,15 @@
 			"from": "2016-02",
 			"to": "2016-05",
 			"title": "Sourcery Academy (Devbridge)",
-			"summary": "React.js + Redux, ASP.NET Core 1.0, Entity Framework 7."
+			"summary": "React.js + Redux, ASP.NET Core 1.0, Entity Framework 7.",
+			"tooltip": {
+				"details": [
+					"Intensive full-stack developer training programme by Devbridge Group",
+					"Built complete applications from scratch under senior mentorship",
+					"Covered modern frontend and backend development practices"
+				],
+				"tech": ["React.js", "Redux", "ASP.NET Core 1.0", "Entity Framework 7", "C#"]
+			}
 		},
 		{
 			"id": "es4b",
@@ -42,15 +71,31 @@
 			"from": "2016-09",
 			"to": "2018-03",
 			"title": "ES4B — Web Developer",
-			"summary": "Full-stack work on CRMs, e-shops, integrations and custom websites while finishing my bachelor's."
+			"summary": "Full-stack work on CRMs, e-shops, integrations and custom websites while finishing my bachelor's.",
+			"tooltip": {
+				"details": [
+					"Full-stack development of CRM systems, e-commerce platforms and custom client websites",
+					"Built integrations with third-party services and payment gateways",
+					"Owned entire delivery cycles — from scoping to deployment — while finishing studies"
+				],
+				"tech": ["PHP", "JavaScript", "MySQL", "WordPress", "REST APIs"]
+			}
 		},
 		{
 			"id": "ktu-ma",
 			"branch": "education",
 			"from": "2017-09",
 			"to": "2019-06",
-			"title": "KTU — MSc (Model-Based Fault Tree Analysis)",
-			"summary": "Master's thesis: Model Based Fault Tree Analysis (FTA). Graduated with honours."
+			"title": "KTU — MSc in Information Systems Engineering",
+			"summary": "Graduated with honours.",
+			"tooltip": {
+				"details": [
+					"Master's thesis: Model-Based Fault Tree Analysis (FTA)",
+					"Research on applying MBSE techniques to safety and reliability engineering",
+					"Graduated with honours"
+				],
+				"tech": ["SysML", "UML", "MagicDraw", "Fault Tree Analysis"]
+			}
 		},
 		{
 			"id": "ktu-aa",
@@ -58,7 +103,15 @@
 			"from": "2017-09",
 			"to": "2020-06",
 			"title": "KTU — Academic Assistant",
-			"summary": "Lectured workshops; taught relational databases and PHP."
+			"summary": "Lectured workshops; taught relational databases and PHP.",
+			"tooltip": {
+				"details": [
+					"Led practical workshops for undergraduate computer science students",
+					"Taught relational database design, SQL and normalisation",
+					"Introduced students to server-side web development with PHP"
+				],
+				"tech": ["SQL", "MySQL", "PHP"]
+			}
 		},
 		{
 			"id": "dassault",
@@ -66,7 +119,17 @@
 			"from": "2018-09",
 			"to": null,
 			"title": "Dassault Systèmes — Product Owner / Systems Analyst",
-			"summary": "Current role: requirements, architecture, feature planning, documentation and customer support for CATIA Magic / MagicDraw."
+			"summary": "Current role: requirements, architecture, feature planning, documentation and customer support for CATIA Magic / MagicDraw.",
+			"tooltip": {
+				"details": [
+					"Product Owner and Systems Analyst for CATIA Magic / MagicDraw — the industry-leading MBSE tool",
+					"Eliciting requirements and translating stakeholder needs into actionable features",
+					"Driving architecture decisions for persistence, collaboration and performance features",
+					"Writing specifications, maintaining the knowledge base and producing technical documentation",
+					"Direct customer engagement and enterprise support for global clients"
+				],
+				"tech": ["CATIA Magic", "MagicDraw", "SysML", "UML", "MBSE", "Jira"]
+			}
 		},
 		{
 			"id": "ppm",
@@ -74,7 +137,14 @@
 			"from": "2020-05",
 			"to": "2021-12",
 			"title": "PPM — React Developer",
-			"summary": "React web applications."
+			"summary": "React web applications.",
+			"tooltip": {
+				"details": [
+					"Frontend development of business web applications",
+					"Built and maintained React component libraries and data-heavy dashboards"
+				],
+				"tech": ["React.js", "TypeScript", "REST APIs"]
+			}
 		},
 		{
 			"id": "isystem",
@@ -82,7 +152,15 @@
 			"from": "2022-01",
 			"to": "2023-12",
 			"title": "iSystem — Software Developer",
-			"summary": "Product tools management system (TypeScript, React, Nest.js, NX)."
+			"summary": "Product tools management system (TypeScript, React, Nest.js, NX).",
+			"tooltip": {
+				"details": [
+					"Developed a product tools management system in a full-stack TypeScript monorepo",
+					"Built scalable REST APIs and dynamic React frontends with shared NX libraries",
+					"Worked within a structured team following agile delivery practices"
+				],
+				"tech": ["TypeScript", "React", "Nest.js", "NX", "PostgreSQL"]
+			}
 		}
 	]
 }

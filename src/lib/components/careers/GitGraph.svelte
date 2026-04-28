@@ -130,6 +130,30 @@
 	let sectionEl: HTMLDivElement | null = $state(null);
 	let active = $state(false);
 
+	// Hover tooltip state
+	let hoveredId = $state<string | null>(null);
+	let tooltipX = $state(0);
+	let tooltipY = $state(0);
+
+	const tooltipCommit = $derived(
+		hoveredId ? commitsWithGeom.find((c) => c.id === hoveredId) ?? null : null
+	);
+
+	function onCommitEnter(id: string, e: MouseEvent) {
+		hoveredId = id;
+		tooltipX = e.clientX;
+		tooltipY = e.clientY;
+	}
+
+	function onCommitMove(e: MouseEvent) {
+		tooltipX = e.clientX;
+		tooltipY = e.clientY;
+	}
+
+	function onCommitLeave() {
+		hoveredId = null;
+	}
+
 	onMount(() => {
 		if (!sectionEl) return;
 		const io = new IntersectionObserver(
@@ -267,15 +291,26 @@
 
 				<!-- Commits -->
 				{#each commitsWithGeom as c (c.id)}
-					<g class="commit" data-id={c.id}>
-						<title>{c.title}{c.isOngoing ? ' (current)' : ''} · {formatRange(c.from, c.to)}</title>
-						<!-- Connector from capsule down to time axis, at the "from" point (right side) -->
+					{@const isHovered = hoveredId === c.id}
+					<g
+						class="commit"
+						class:is-hovered={isHovered}
+						data-id={c.id}
+						style="--c: {c.color}"
+						onmouseenter={(e) => onCommitEnter(c.id, e)}
+						onmousemove={onCommitMove}
+						onmouseleave={onCommitLeave}
+						role="button"
+						tabindex="0"
+						aria-label="{c.title} · {formatRange(c.from, c.to)}"
+					>
+						<!-- Connector from capsule down to time axis -->
 						<path
 							d="M {c.xFrom} {c.y} C {c.xFrom} {(c.y + timelineY) / 2}, {c.xFrom} {timelineY - 16}, {c.xFrom} {timelineY}"
 							fill="none"
 							stroke={c.color}
 							stroke-width="1"
-							opacity="0.28"
+							opacity={isHovered ? 0.55 : 0.28}
 							stroke-dasharray="3 3"
 						/>
 						<!-- Capsule -->
@@ -286,13 +321,13 @@
 							height={14}
 							rx={7}
 							fill={c.color}
-							opacity="0.92"
+							opacity={isHovered ? 1 : 0.92}
 						/>
 						<!-- Start node (from) -->
 						<circle
 							cx={c.xFrom}
 							cy={c.y}
-							r={5.5}
+							r={isHovered ? 7 : 5.5}
 							fill="var(--bg-paper)"
 							stroke={c.color}
 							stroke-width="1.75"
@@ -304,14 +339,14 @@
 								fill={c.color}
 							/>
 						{:else}
-							<circle cx={c.xTo} cy={c.y} r={4.5} fill={c.color} />
+							<circle cx={c.xTo} cy={c.y} r={isHovered ? 6 : 4.5} fill={c.color} />
 						{/if}
 						<!-- Title — centered above the capsule -->
 						<text
 							x={c.capsX + c.capsW / 2}
 							y={c.y - 14}
 							class="commit-title"
-							fill="var(--ink-deep)"
+							fill={isHovered ? c.color : 'var(--ink-deep)'}
 							text-anchor="middle"
 						>
 							{c.title}{c.isOngoing ? ' (current)' : ''}
@@ -321,6 +356,32 @@
 			</svg>
 		</div>
 	</div>
+
+	<!-- Tooltip overlay (desktop, fixed-position) -->
+	{#if tooltipCommit}
+		<div
+			class="commit-tooltip"
+			style="left: {tooltipX}px; top: {tooltipY}px; --tc: {tooltipCommit.color}"
+			role="tooltip"
+		>
+			<p class="tt-title">{tooltipCommit.title}{tooltipCommit.isOngoing ? ' (current)' : ''}</p>
+			<p class="tt-dates">{formatRange(tooltipCommit.from, tooltipCommit.to)}</p>
+			{#if tooltipCommit.tooltip?.details?.length}
+				<ul class="tt-details">
+					{#each tooltipCommit.tooltip.details as d}
+						<li>{d}</li>
+					{/each}
+				</ul>
+			{/if}
+			{#if tooltipCommit.tooltip?.tech?.length}
+				<div class="tt-tech">
+					{#each tooltipCommit.tooltip.tech as t}
+						<span>{t}</span>
+					{/each}
+				</div>
+			{/if}
+		</div>
+	{/if}
 
 	<!-- Mobile fallback: vertical cards, newest first. -->
 	<ul class="vertical-list" aria-label="Careers timeline (list view)">
@@ -335,6 +396,9 @@
 					<span class="v-dates">{formatRange(c.from, c.to)}</span>
 				</header>
 				<h3>{c.title}{c.isOngoing ? ' (current)' : ''}</h3>
+				{#if c.summary}
+					<p class="v-summary">{c.summary}</p>
+				{/if}
 			</li>
 		{/each}
 	</ul>
@@ -398,8 +462,83 @@
 		font-weight: 500;
 		pointer-events: none;
 		white-space: nowrap;
+		transition: fill 180ms ease;
 	}
 
+	/* Commit hover: glow via CSS custom property set inline */
+	.commit {
+		cursor: pointer;
+		transition: filter 200ms ease;
+	}
+	.commit.is-hovered {
+		filter: drop-shadow(0 0 10px var(--c)) drop-shadow(0 0 4px var(--c));
+	}
+
+	/* Tooltip */
+	.commit-tooltip {
+		position: fixed;
+		z-index: 200;
+		pointer-events: none;
+		transform: translate(-50%, calc(-100% - 18px));
+		background: var(--bg-paper, #fff);
+		border: 1px solid var(--tc);
+		border-radius: var(--radius-md, 8px);
+		padding: 12px 16px;
+		max-width: 300px;
+		min-width: 220px;
+		box-shadow:
+			0 0 0 1px color-mix(in srgb, var(--tc) 20%, transparent),
+			0 8px 24px rgba(0, 0, 0, 0.14),
+			0 0 20px color-mix(in srgb, var(--tc) 12%, transparent);
+		animation: tt-in 140ms ease forwards;
+	}
+	@keyframes tt-in {
+		from { opacity: 0; transform: translate(-50%, calc(-100% - 10px)); }
+		to   { opacity: 1; transform: translate(-50%, calc(-100% - 18px)); }
+	}
+	.tt-title {
+		font-family: var(--font-body);
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--tc);
+		margin: 0 0 2px;
+		line-height: 1.3;
+	}
+	.tt-dates {
+		font-family: var(--font-mono, ui-monospace);
+		font-size: 11px;
+		color: var(--ink-mute);
+		margin: 0 0 10px;
+		letter-spacing: 0.04em;
+	}
+	.tt-details {
+		margin: 0 0 10px;
+		padding-left: 14px;
+		list-style: disc;
+	}
+	.tt-details li {
+		font-family: var(--font-body);
+		font-size: 12px;
+		color: var(--ink-deep);
+		line-height: 1.5;
+		margin-bottom: 3px;
+	}
+	.tt-tech {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+	}
+	.tt-tech span {
+		font-family: var(--font-mono, ui-monospace);
+		font-size: 10px;
+		padding: 2px 7px;
+		border-radius: 100px;
+		background: color-mix(in srgb, var(--tc) 14%, transparent);
+		color: var(--tc);
+		letter-spacing: 0.04em;
+	}
+
+	/* Mobile list */
 	.vertical-list {
 		display: none;
 		flex-direction: column;
@@ -420,12 +559,21 @@
 		transform: translateY(10px);
 		transition:
 			opacity 480ms var(--ease-out),
-			transform 480ms var(--ease-out);
+			transform 480ms var(--ease-out),
+			box-shadow 220ms ease,
+			border-color 220ms ease;
 		transition-delay: calc(var(--order) * 60ms);
 	}
 	.active .v-commit {
 		opacity: 1;
 		transform: translateY(0);
+	}
+	.v-commit:hover {
+		box-shadow:
+			0 0 0 1px var(--branch-color),
+			0 4px 16px rgba(0, 0, 0, 0.08),
+			0 0 16px color-mix(in srgb, var(--branch-color) 15%, transparent);
+		border-color: var(--branch-color);
 	}
 	.v-commit header {
 		display: flex;
@@ -456,8 +604,14 @@
 		text-transform: none;
 	}
 	.v-commit h3 {
-		margin: 0;
+		margin: 0 0 var(--space-2);
 		font-size: var(--step-0);
+	}
+	.v-summary {
+		margin: 0;
+		font-size: var(--step--1);
+		color: var(--ink-mute);
+		line-height: 1.55;
 	}
 
 	@media (max-width: 819px) {
@@ -466,6 +620,9 @@
 		}
 		.vertical-list {
 			display: flex;
+		}
+		.commit-tooltip {
+			display: none;
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
@@ -478,6 +635,12 @@
 			transform: none !important;
 			padding: 0 var(--space-6);
 			overflow-x: auto;
+		}
+		.commit {
+			transition: none;
+		}
+		.commit-tooltip {
+			animation: none;
 		}
 	}
 </style>
