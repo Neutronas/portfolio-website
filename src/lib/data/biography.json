@@ -44,21 +44,21 @@
 			"year": 2012,
 			"title": "Competitive Team Fortress 2",
 			"body": "Top level player in Europe, representing national Lithuanian team, captain of national team, many teammates who became lifelong friends.",
-			"image": { "src": "", "alt": "TF2 competitive days" }
+			"image": { "src": "/img/bio/lanparties.png", "alt": "TF2 competitive days" }
 		},
 		{
 			"id": "married",
 			"year": 2022,
 			"title": "Got married",
 			"body": "The best teammate I've ever had, now officially on the roster for good.",
-			"image": { "src": "", "alt": "Wedding day" }
+			"image": { "src": "/img/bio/wedding.png", "alt": "Wedding day" }
 		},
 		{
 			"id": "rokas",
 			"year": 2023,
 			"title": "Son Rokas was born",
 			"body": "A small human joined the team. Suddenly the scale of everything changes — and the best project on the list has no deadline.",
-			"image": { "src": "", "alt": "Baby Rokas" }
+			"image": { "src": "/img/bio/birthofrokas.png", "alt": "Baby Rokas" }
 		}
 	]
 }
