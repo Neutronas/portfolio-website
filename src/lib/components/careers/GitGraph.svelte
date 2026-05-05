@@ -19,19 +19,27 @@
 	const maxDate = new Date(rawMax.getFullYear() + 1, 0, 1);
 	const span = +maxDate - +minDate;
 
-	const width = 2400;
-	const height = 1200;
-	const padLeft = 200;
-	const padRight = 100;
-	const padTop = 70;
-	const padBottom = 120;
+	const width = 1400;
+	const height = 600;
+	const padLeft = 90;
+	const padRight = 40;
+	const padTop = 35;
+	const padBottom = 60;
 	const chartW = width - padLeft - padRight;
 	const chartH = height - padTop - padBottom;
 
-	const capsuleH = 48;
-	const minCapsW = 320;
-	const capCharW = 14 * 0.55;
-	const subLaneGap = 72;
+	const capsuleH = 36;
+	const subLaneGap = 50;
+	const capFontSize = 11;
+	const capCharW = capFontSize * 0.52;
+	const minTextWidth = 60;
+
+	function darkenColor(hex: string): string {
+		const r = parseInt(hex.slice(1, 3), 16);
+		const g = parseInt(hex.slice(3, 5), 16);
+		const b = parseInt(hex.slice(5, 7), 16);
+		return `rgb(${Math.round(r * 0.6)}, ${Math.round(g * 0.6)}, ${Math.round(b * 0.6)})`;
+	}
 
 	const xForDate = (d: Date) => padLeft + ((+maxDate - +d) / span) * chartW;
 
@@ -46,7 +54,8 @@
 	for (let y = minDate.getFullYear(); y < maxDate.getFullYear(); y++) years.push(y);
 
 	function wrapText(text: string, maxW: number): string[] {
-		const maxChars = Math.floor((maxW - 24) / capCharW);
+		if (maxW < minTextWidth) return [];
+		const maxChars = Math.floor((maxW - 14) / capCharW);
 		const words = text.split(' ');
 		const lines: string[] = [];
 		let line = '';
@@ -60,7 +69,8 @@
 			}
 		}
 		if (line) lines.push(line);
-		return lines;
+		const maxLines = Math.floor((capsuleH - 6) / (capFontSize * 1.3));
+		return lines.slice(0, maxLines);
 	}
 
 	type CommitGeom = Commit & {
@@ -115,10 +125,8 @@
 		const branch: Branch = careers.branches[branchIdx];
 		const xFrom = xForDate(toDate(c.from));
 		const xTo = xForDate(toDate(c.to));
-		const dateW = Math.abs(xFrom - xTo);
-		const capsW = Math.max(dateW, minCapsW);
-		const midX = (xFrom + xTo) / 2;
-		const capsX = midX - capsW / 2;
+		const capsX = Math.min(xFrom, xTo);
+		const capsW = Math.max(Math.abs(xFrom - xTo), 8);
 		const fullTitle = c.title + (c.to === null ? ' (current)' : '');
 		return {
 			...c,
@@ -204,15 +212,15 @@
 			role="img"
 		>
 			<defs>
-				<pattern id="lane-rail" x="0" y="0" width="8" height="1" patternUnits="userSpaceOnUse">
-					<rect width="4" height="1" fill="var(--line-hair)" />
+				<pattern id="lane-rail" x="0" y="0" width="6" height="1" patternUnits="userSpaceOnUse">
+					<rect width="3" height="1" fill="var(--line-hair)" />
 				</pattern>
 			</defs>
 
 			{#each careers.branches as b, i (b.id)}
 				<text
-					x={padLeft - 20}
-					y={laneBaseY(i) + 5}
+					x={padLeft - 12}
+					y={laneBaseY(i) + 4}
 					class="lane-label"
 					fill={b.color}
 					text-anchor="end"
@@ -243,26 +251,26 @@
 				<line
 					x1={x}
 					x2={x}
-					y1={timelineY - 4}
-					y2={timelineY + 4}
+					y1={timelineY - 3}
+					y2={timelineY + 3}
 					stroke="var(--ink-mute)"
 					opacity="0.5"
 				/>
-				<text x={x} y={timelineY + 26} class="year-label" text-anchor="middle">{y}</text>
+				<text x={x} y={timelineY + 16} class="year-label" text-anchor="middle">{y}</text>
 			{/each}
 
 			<line
 				x1={nowX}
 				x2={nowX}
-				y1={padTop - 10}
+				y1={padTop - 6}
 				y2={timelineY}
 				stroke="var(--accent-bronze)"
-				stroke-dasharray="4 4"
+				stroke-dasharray="3 3"
 				opacity="0.45"
 			/>
 			<text
 				x={nowX}
-				y={padTop - 18}
+				y={padTop - 10}
 				class="now-label"
 				text-anchor="middle"
 				fill="var(--accent-bronze)"
@@ -289,47 +297,58 @@
 						d="M {c.xFrom} {c.y + half} L {c.xFrom} {timelineY}"
 						fill="none"
 						stroke={c.color}
-						stroke-width="1"
-						opacity={isHovered ? 0.55 : 0.25}
-						stroke-dasharray="3 3"
+						stroke-width="0.75"
+						opacity={isHovered ? 0.55 : 0.2}
+						stroke-dasharray="2 2"
 					/>
 					<rect
 						x={c.capsX}
 						y={c.y - half}
 						width={c.capsW}
 						height={capsuleH}
-						rx={8}
-						fill={c.color}
-						opacity={isHovered ? 1 : 0.9}
+						rx={6}
+						fill={darkenColor(c.color)}
+						opacity={isHovered ? 1 : 0.92}
 					/>
 					{#if c.isOngoing}
 						<circle
-							cx={c.capsX + 3}
+							cx={c.capsX + 2}
 							cy={c.y}
-							r={4}
+							r={3}
 							fill="var(--bg-paper)"
 							opacity="0.7"
 						>
 							<animate attributeName="opacity" values="0.7;0.3;0.7" dur="2s" repeatCount="indefinite" />
 						</circle>
 					{/if}
-					<text
-						x={c.capsX + c.capsW / 2}
-						y={c.y}
-						class="cap-text"
-						text-anchor="middle"
-						dominant-baseline="central"
-						fill="#222"
-					>
-						{#each c.lines as line, li}
-							<tspan
-								x={c.capsX + c.capsW / 2}
-								dy={li === 0 ? `${-(c.lines.length - 1) * 0.65}em` : '1.3em'}
-							>
-								{line}
-							</tspan>
-						{/each}
-					</text>
+					{#if c.lines.length > 0}
+						<text
+							x={c.capsX + c.capsW / 2}
+							y={c.y}
+							class="cap-text"
+							text-anchor="middle"
+							dominant-baseline="central"
+							fill="#fff"
+						>
+							{#each c.lines as line, li}
+								<tspan
+									x={c.capsX + c.capsW / 2}
+									dy={li === 0 ? `${-(c.lines.length - 1) * 0.65}em` : '1.3em'}
+								>
+									{line}
+								</tspan>
+							{/each}
+						</text>
+					{:else}
+						<text
+							x={c.capsX + c.capsW + 6}
+							y={c.y + 3}
+							class="cap-label-outside"
+							fill={c.color}
+						>
+							{c.title}
+						</text>
+					{/if}
 				</g>
 			{/each}
 		</svg>
@@ -385,53 +404,55 @@
 		width: 100%;
 	}
 	.graph-container {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		min-height: 80vh;
-		padding: var(--space-4) var(--space-6);
+		padding: var(--space-4) var(--space-4);
 		background:
 			radial-gradient(
 				ellipse 60% 50% at 50% 50%,
-				rgba(111, 199, 221, 0.08) 0%,
+				rgba(111, 199, 221, 0.06) 0%,
 				transparent 70%
 			);
 	}
 	.graph-svg {
 		display: block;
 		width: 100%;
-		height: 80vh;
+		height: auto;
 		background: var(--bg-paper);
 		border-radius: var(--radius-lg);
 		border: 1px solid var(--line-hair);
-		padding: var(--space-5);
+		padding: var(--space-3);
 		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 8px 24px -12px rgba(0, 0, 0, 0.08);
 	}
 	.lane-label {
 		font-family: var(--font-body);
-		font-size: 16px;
-		letter-spacing: 0.22em;
+		font-size: 10px;
+		letter-spacing: 0.18em;
 		text-transform: uppercase;
 		font-weight: 500;
 	}
 	.year-label {
 		font-family: var(--font-mono, ui-monospace);
-		font-size: 15px;
+		font-size: 8px;
 		fill: var(--ink-mute);
 	}
 	.now-label {
 		font-family: var(--font-body);
-		font-size: 14px;
-		letter-spacing: 0.24em;
+		font-size: 7px;
+		letter-spacing: 0.2em;
 		text-transform: uppercase;
 		font-weight: 500;
 	}
 	.cap-text {
 		font-family: var(--font-body);
-		font-size: 14px;
+		font-size: 11px;
 		font-weight: 600;
 		pointer-events: none;
 		line-height: 1.3;
+	}
+	.cap-label-outside {
+		font-family: var(--font-body);
+		font-size: 9px;
+		font-weight: 500;
+		pointer-events: none;
 	}
 
 	.commit {
@@ -439,7 +460,7 @@
 		transition: filter 200ms ease;
 	}
 	.commit.is-hovered {
-		filter: drop-shadow(0 0 10px var(--c)) drop-shadow(0 0 4px var(--c));
+		filter: drop-shadow(0 0 6px var(--c)) drop-shadow(0 0 3px var(--c));
 	}
 
 	.commit-tooltip {
