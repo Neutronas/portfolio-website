@@ -1,6 +1,6 @@
-# Lukas Ruzauskas — Portfolio Website
+# Lukas Ruzauskas - Portfolio Website
 
-Personal portfolio site live at [ruzauskas.lt](https://ruzauskas.lt). A scroll-driven single-page experience split into three interactive paths: **Careers**, **Biography**, and **Projects**.
+Personal portfolio site live at [ruzauskas.lt](https://ruzauskas.lt). A multi-page SvelteKit application with three interactive paths: **Careers**, **Biography**, and **Projects**.
 
 Built with SvelteKit + Svelte 5 (runes), GSAP scroll animations, and Leaflet maps. Deployed automatically to GitHub Pages on every push to `main`.
 
@@ -8,7 +8,7 @@ Built with SvelteKit + Svelte 5 (runes), GSAP scroll animations, and Leaflet map
 
 ## Editing content
 
-All copy lives in JSON files under [`src/lib/data/`](./src/lib/data/) — no code changes needed.
+All copy lives in JSON files under [`src/lib/data/`](./src/lib/data/) - no code changes needed.
 
 | File | What's in it |
 |---|---|
@@ -22,10 +22,10 @@ All copy lives in JSON files under [`src/lib/data/`](./src/lib/data/) — no cod
 ```jsonc
 {
   "id": "unique-slug",
-  "branch": "work",          // school | study | work | academia
+  "branch": "work",          // education | work
   "from": "2024-03",
   "to": "2025-11",           // null = ongoing
-  "title": "Company — Role",
+  "title": "Company - Role",
   "summary": "Optional one-liner."
 }
 ```
@@ -70,7 +70,7 @@ Requirements: **Node 20+**, **npm 10+**
 npm install
 npm run dev        # http://localhost:5173
 npm run check      # TypeScript + Svelte type-check
-npm run build      # static output → build/
+npm run build      # static output -> build/
 npm run preview    # serve build/ locally
 ```
 
@@ -94,15 +94,15 @@ The `static/CNAME` file points GitHub Pages to `ruzauskas.lt`. DNS setup require
 
 ### Social preview
 
-Drop a 1200×630 JPG into `static/og.jpg` — already referenced by `<meta property="og:image">`.
+Drop a 1200x630 JPG into `static/og.jpg` - already referenced by `<meta property="og:image">`.
 
 ---
 
 ## Stack
 
 - **SvelteKit 2** + **Svelte 5** (runes) + `@sveltejs/adapter-static`
-- **GSAP 3** + ScrollTrigger — lazy-loaded per path
-- **Leaflet 1.9** + CartoDB Positron tiles — lazy-loaded near viewport
+- **GSAP 3** + ScrollTrigger - lazy-loaded for biography horizontal scroll
+- **Leaflet 1.9** + CartoDB Positron tiles - lazy-loaded near viewport
 - `@fontsource-variable/fraunces` (display) + `@fontsource-variable/inter` (body)
 - TypeScript, fully prerendered to static HTML
 
@@ -111,9 +111,12 @@ Drop a 1200×630 JPG into `static/og.jpg` — already referenced by `<meta prope
 ```
 src/
 ├── routes/
-│   ├── +layout.svelte        fonts, skip-link shell
+│   ├── +layout.svelte        fonts, nav shell, skip-link
 │   ├── +layout.ts            prerender = true
-│   └── +page.svelte          single page; path driven by appState
+│   ├── +page.svelte          landing page with path selector
+│   ├── biography/            horizontal scroll milestones + Leaflet maps
+│   ├── careers/              SVG timeline graph (desktop), card list (mobile)
+│   └── projects/             snap-scroll carousel
 └── lib/
     ├── data/*.json            all editable content
     ├── components/

@@ -4,14 +4,14 @@
 			"id": "birth",
 			"year": 1994,
 			"title": "Born in Kaišiadorys",
-			"body": "A small town in central Lithuania — quiet streets, the sound of trains at dusk. Every story needs a starting point; this one starts here.",
+			"body": "A small town in central Lithuania - quiet streets, the sound of trains at dusk. Every story needs a starting point; this one starts here.",
 			"map": { "lat": 54.862, "lng": 24.458, "zoom": 11, "label": "Kaišiadorys" }
 		},
 		{
 			"id": "computer",
 			"year": 1997,
 			"title": "First computer at age 3",
-			"body": "A beige box in the corner of the room. I was small enough that the keyboard felt enormous, but the curiosity stuck — and hasn't left.",
+			"body": "A beige box in the corner of the room. I was small enough that the keyboard felt enormous, but the curiosity stuck - and hasn't left.",
 			"image": { "src": "", "alt": "Young Lukas with his first computer" }
 		},
 		{
@@ -57,7 +57,7 @@
 			"id": "rokas",
 			"year": 2023,
 			"title": "Son Rokas was born",
-			"body": "A small human joined the team. Suddenly the scale of everything changes — and the best project on the list has no deadline.",
+			"body": "A small human joined the team. Suddenly the scale of everything changes - and the best project on the list has no deadline.",
 			"image": { "src": "/img/bio/birthofrokas.png", "alt": "Baby Rokas" }
 		}
 	]

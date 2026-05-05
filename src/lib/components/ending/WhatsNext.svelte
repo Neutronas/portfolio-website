@@ -48,7 +48,7 @@
 	<Reveal delay={200}>
 		<p class="lede">
 			The next version of {contacts.name} might just depend on you.<br />
-			If something here sparked an idea — or a role, a project, a conversation — get in touch.
+			If something here sparked an idea - or a role, a project, a conversation - get in touch.
 		</p>
 	</Reveal>
 

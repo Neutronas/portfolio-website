@@ -1,4 +1,4 @@
-// Lazy GSAP loader — keeps the initial bundle lean. Call from onMount / $effect.
+// Lazy GSAP loader - keeps the initial bundle lean. Call from onMount / $effect.
 
 let gsapPromise: Promise<typeof import('gsap').gsap> | null = null;
 

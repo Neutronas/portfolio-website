@@ -16,7 +16,7 @@
 			label: 'Careers',
 			kicker: 'the git graph',
 			description:
-				'A branching timeline of jobs and studies — some running in parallel, some merging back in.',
+				'A branching timeline of jobs and studies - some running in parallel, some merging back in.',
 			glyph: 'careers'
 		},
 		{
@@ -24,7 +24,7 @@
 			label: 'Biography',
 			kicker: 'time travel',
 			description:
-				'A horizontal trip through the milestones — towns, hobbies, the eSports years, family.',
+				'A horizontal trip through the milestones - towns, hobbies, the eSports years, family.',
 			glyph: 'biography'
 		},
 		{
@@ -32,7 +32,7 @@
 			label: 'Projects',
 			kicker: 'the work',
 			description:
-				'Every project worth remembering — from gaming servers to AI-powered SaaS.',
+				'Every project worth remembering - from gaming servers to AI-powered SaaS.',
 			glyph: 'projects'
 		}
 	];
@@ -44,7 +44,7 @@
 			<p class="eyebrow">Choose a path</p>
 			<h2>Three ways in. Pick any.</h2>
 			<p class="lede">
-				Every path ends with the same question — but answers it differently. You can come back and
+				Every path ends with the same question - but answers it differently. You can come back and
 				pick another whenever you like.
 			</p>
 		</header>

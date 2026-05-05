@@ -20,27 +20,48 @@
 	const span = +maxDate - +minDate;
 
 	const width = 2400;
-	const height = 680;
-	const padLeft = 160;
-	const padRight = 160;
-	const padTop = 50;
-	const padBottom = 110;
+	const height = 1200;
+	const padLeft = 200;
+	const padRight = 100;
+	const padTop = 70;
+	const padBottom = 120;
 	const chartW = width - padLeft - padRight;
 	const chartH = height - padTop - padBottom;
 
-	// Reversed X: newest (maxDate) on the LEFT, oldest (minDate) on the RIGHT.
+	const capsuleH = 48;
+	const minCapsW = 320;
+	const capCharW = 14 * 0.55;
+	const subLaneGap = 72;
+
 	const xForDate = (d: Date) => padLeft + ((+maxDate - +d) / span) * chartW;
 
 	const laneCount = careers.branches.length;
 	const laneSlot = chartH / laneCount;
 	const laneBaseY = (idx: number) => padTop + laneSlot * (idx + 0.5);
-	const subLaneGap = 46;
 
 	const timelineY = height - padBottom;
 	const nowX = xForDate(now);
 
 	const years: number[] = [];
 	for (let y = minDate.getFullYear(); y < maxDate.getFullYear(); y++) years.push(y);
+
+	function wrapText(text: string, maxW: number): string[] {
+		const maxChars = Math.floor((maxW - 24) / capCharW);
+		const words = text.split(' ');
+		const lines: string[] = [];
+		let line = '';
+		for (const w of words) {
+			const test = line ? line + ' ' + w : w;
+			if (test.length > maxChars && line) {
+				lines.push(line);
+				line = w;
+			} else {
+				line = test;
+			}
+		}
+		if (line) lines.push(line);
+		return lines;
+	}
 
 	type CommitGeom = Commit & {
 		xFrom: number;
@@ -53,9 +74,9 @@
 		branchLabel: string;
 		subLane: number;
 		isOngoing: boolean;
+		lines: string[];
 	};
 
-	// Sort by start date ascending so sub-lane assignment is deterministic.
 	const rawCommits = careers.commits
 		.map((c) => ({
 			c,
@@ -94,8 +115,11 @@
 		const branch: Branch = careers.branches[branchIdx];
 		const xFrom = xForDate(toDate(c.from));
 		const xTo = xForDate(toDate(c.to));
-		const capsX = Math.min(xFrom, xTo);
-		const capsW = Math.max(Math.abs(xFrom - xTo), 14);
+		const dateW = Math.abs(xFrom - xTo);
+		const capsW = Math.max(dateW, minCapsW);
+		const midX = (xFrom + xTo) / 2;
+		const capsX = midX - capsW / 2;
+		const fullTitle = c.title + (c.to === null ? ' (current)' : '');
 		return {
 			...c,
 			xFrom,
@@ -107,11 +131,11 @@
 			branchIdx,
 			branchLabel: branch.label,
 			subLane: item.subLane,
-			isOngoing: c.to === null
+			isOngoing: c.to === null,
+			lines: wrapText(fullTitle, capsW)
 		};
 	});
 
-	// Mobile list: newest first.
 	const commitsDesc = [...commitsWithGeom].sort(
 		(a, b) => +toDate(b.from) - +toDate(a.from)
 	);
@@ -121,13 +145,12 @@
 		const t = to ? toDate(to) : null;
 		const fmt = (d: Date) =>
 			d.toLocaleString('en-GB', { month: 'short', year: 'numeric' });
-		return `${fmt(f)} — ${t ? fmt(t) : 'present'}`;
+		return `${fmt(f)} - ${t ? fmt(t) : 'present'}`;
 	};
 
 	let sectionEl: HTMLDivElement | null = $state(null);
 	let active = $state(false);
 
-	// Hover tooltip state
 	let hoveredId = $state<string | null>(null);
 	let tooltipX = $state(0);
 	let tooltipY = $state(0);
@@ -173,151 +196,145 @@
 
 <div class="graph-wrap" bind:this={sectionEl} class:active>
 	<div class="graph-container">
-			<svg
-				class="graph-svg"
-				viewBox="0 0 {width} {height}"
-				preserveAspectRatio="xMidYMid meet"
-				aria-label="Careers timeline"
-				role="img"
-			>
-				<defs>
-					<pattern id="lane-rail" x="0" y="0" width="8" height="1" patternUnits="userSpaceOnUse">
-						<rect width="4" height="1" fill="var(--line-hair)" />
-					</pattern>
-				</defs>
+		<svg
+			class="graph-svg"
+			viewBox="0 0 {width} {height}"
+			preserveAspectRatio="xMidYMid meet"
+			aria-label="Careers timeline"
+			role="img"
+		>
+			<defs>
+				<pattern id="lane-rail" x="0" y="0" width="8" height="1" patternUnits="userSpaceOnUse">
+					<rect width="4" height="1" fill="var(--line-hair)" />
+				</pattern>
+			</defs>
 
-				<!-- Lanes -->
-				{#each careers.branches as b, i (b.id)}
-					<text
-						x={padLeft - 20}
-						y={laneBaseY(i) + 4}
-						class="lane-label"
-						fill={b.color}
-						text-anchor="end"
-					>
-						{b.label}
-					</text>
-					<line
-						x1={padLeft}
-						x2={width - padRight}
-						y1={laneBaseY(i)}
-						y2={laneBaseY(i)}
-						stroke="url(#lane-rail)"
-						stroke-width="1"
-					/>
-				{/each}
-
-				<!-- Time axis (reversed: new on left, old on right) -->
+			{#each careers.branches as b, i (b.id)}
+				<text
+					x={padLeft - 20}
+					y={laneBaseY(i) + 5}
+					class="lane-label"
+					fill={b.color}
+					text-anchor="end"
+				>
+					{b.label}
+				</text>
 				<line
 					x1={padLeft}
 					x2={width - padRight}
-					y1={timelineY}
-					y2={timelineY}
-					stroke="var(--ink-mute)"
+					y1={laneBaseY(i)}
+					y2={laneBaseY(i)}
+					stroke="url(#lane-rail)"
 					stroke-width="1"
-					opacity="0.6"
 				/>
-				{#each years as y}
-					{@const x = xForDate(new Date(y, 0, 1))}
-					<line
-						x1={x}
-						x2={x}
-						y1={timelineY - 4}
-						y2={timelineY + 4}
-						stroke="var(--ink-mute)"
-						opacity="0.5"
-					/>
-					<text x={x} y={timelineY + 26} class="year-label" text-anchor="middle">{y}</text>
-				{/each}
+			{/each}
 
-				<!-- "Now" marker (leftmost side) -->
+			<line
+				x1={padLeft}
+				x2={width - padRight}
+				y1={timelineY}
+				y2={timelineY}
+				stroke="var(--ink-mute)"
+				stroke-width="1"
+				opacity="0.6"
+			/>
+			{#each years as y}
+				{@const x = xForDate(new Date(y, 0, 1))}
 				<line
-					x1={nowX}
-					x2={nowX}
-					y1={padTop - 10}
-					y2={timelineY}
-					stroke="var(--accent-bronze)"
-					stroke-dasharray="4 4"
-					opacity="0.45"
+					x1={x}
+					x2={x}
+					y1={timelineY - 4}
+					y2={timelineY + 4}
+					stroke="var(--ink-mute)"
+					opacity="0.5"
 				/>
-				<text
-					x={nowX}
-					y={padTop - 18}
-					class="now-label"
-					text-anchor="middle"
-					fill="var(--accent-bronze)"
-				>
-					now
-				</text>
+				<text x={x} y={timelineY + 26} class="year-label" text-anchor="middle">{y}</text>
+			{/each}
 
-				<!-- Commits -->
-				{#each commitsWithGeom as c (c.id)}
-					{@const isHovered = hoveredId === c.id}
-					<g
-						class="commit"
-						class:is-hovered={isHovered}
-						data-id={c.id}
-						style="--c: {c.color}"
-						onmouseenter={(e) => onCommitEnter(c.id, e)}
-						onmousemove={onCommitMove}
-						onmouseleave={onCommitLeave}
-						role="button"
-						tabindex="0"
-						aria-label="{c.title} · {formatRange(c.from, c.to)}"
-					>
-						<!-- Connector from capsule down to time axis -->
-						<path
-							d="M {c.xFrom} {c.y} C {c.xFrom} {(c.y + timelineY) / 2}, {c.xFrom} {timelineY - 16}, {c.xFrom} {timelineY}"
-							fill="none"
-							stroke={c.color}
-							stroke-width="1"
-							opacity={isHovered ? 0.55 : 0.28}
-							stroke-dasharray="3 3"
-						/>
-						<!-- Capsule -->
-						<rect
-							x={c.capsX}
-							y={c.y - 7}
-							width={c.capsW}
-							height={14}
-							rx={7}
-							fill={c.color}
-							opacity={isHovered ? 1 : 0.92}
-						/>
-						<!-- Start node (from) -->
+			<line
+				x1={nowX}
+				x2={nowX}
+				y1={padTop - 10}
+				y2={timelineY}
+				stroke="var(--accent-bronze)"
+				stroke-dasharray="4 4"
+				opacity="0.45"
+			/>
+			<text
+				x={nowX}
+				y={padTop - 18}
+				class="now-label"
+				text-anchor="middle"
+				fill="var(--accent-bronze)"
+			>
+				now
+			</text>
+
+			{#each commitsWithGeom as c (c.id)}
+				{@const isHovered = hoveredId === c.id}
+				{@const half = capsuleH / 2}
+				<g
+					class="commit"
+					class:is-hovered={isHovered}
+					data-id={c.id}
+					style="--c: {c.color}"
+					onmouseenter={(e) => onCommitEnter(c.id, e)}
+					onmousemove={onCommitMove}
+					onmouseleave={onCommitLeave}
+					role="button"
+					tabindex="0"
+					aria-label="{c.title} - {formatRange(c.from, c.to)}"
+				>
+					<path
+						d="M {c.xFrom} {c.y + half} L {c.xFrom} {timelineY}"
+						fill="none"
+						stroke={c.color}
+						stroke-width="1"
+						opacity={isHovered ? 0.55 : 0.25}
+						stroke-dasharray="3 3"
+					/>
+					<rect
+						x={c.capsX}
+						y={c.y - half}
+						width={c.capsW}
+						height={capsuleH}
+						rx={8}
+						fill={c.color}
+						opacity={isHovered ? 1 : 0.9}
+					/>
+					{#if c.isOngoing}
 						<circle
-							cx={c.xFrom}
+							cx={c.capsX + 3}
 							cy={c.y}
-							r={isHovered ? 7 : 5.5}
+							r={4}
 							fill="var(--bg-paper)"
-							stroke={c.color}
-							stroke-width="1.75"
-						/>
-						<!-- End node / ongoing arrow (to), pointing LEFT toward future -->
-						{#if c.isOngoing}
-							<polygon
-								points="{c.xTo - 8},{c.y} {c.xTo + 4},{c.y - 6} {c.xTo + 4},{c.y + 6}"
-								fill={c.color}
-							/>
-						{:else}
-							<circle cx={c.xTo} cy={c.y} r={isHovered ? 6 : 4.5} fill={c.color} />
-						{/if}
-						<!-- Title — centered above the capsule -->
-						<text
-							x={c.capsX + c.capsW / 2}
-							y={c.y - 14}
-							class="commit-title"
-							fill={isHovered ? c.color : 'var(--ink-deep)'}
-							text-anchor="middle"
+							opacity="0.7"
 						>
-							{c.title}{c.isOngoing ? ' (current)' : ''}
-						</text>
-					</g>
-				{/each}
-			</svg>
+							<animate attributeName="opacity" values="0.7;0.3;0.7" dur="2s" repeatCount="indefinite" />
+						</circle>
+					{/if}
+					<text
+						x={c.capsX + c.capsW / 2}
+						y={c.y}
+						class="cap-text"
+						text-anchor="middle"
+						dominant-baseline="central"
+						fill="#222"
+					>
+						{#each c.lines as line, li}
+							<tspan
+								x={c.capsX + c.capsW / 2}
+								dy={li === 0 ? `${-(c.lines.length - 1) * 0.65}em` : '1.3em'}
+							>
+								{line}
+							</tspan>
+						{/each}
+					</text>
+				</g>
+			{/each}
+		</svg>
 	</div>
 
-	<!-- Tooltip overlay (desktop, fixed-position) -->
 	{#if tooltipCommit}
 		<div
 			class="commit-tooltip"
@@ -343,7 +360,6 @@
 		</div>
 	{/if}
 
-	<!-- Mobile fallback: vertical cards, newest first. -->
 	<ul class="vertical-list" aria-label="Careers timeline (list view)">
 		{#each commitsDesc as c, i (c.id)}
 			<li
@@ -369,7 +385,11 @@
 		width: 100%;
 	}
 	.graph-container {
-		padding: var(--space-8) var(--space-6);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 80vh;
+		padding: var(--space-4) var(--space-6);
 		background:
 			radial-gradient(
 				ellipse 60% 50% at 50% 50%,
@@ -380,7 +400,7 @@
 	.graph-svg {
 		display: block;
 		width: 100%;
-		height: auto;
+		height: 80vh;
 		background: var(--bg-paper);
 		border-radius: var(--radius-lg);
 		border: 1px solid var(--line-hair);
@@ -389,33 +409,31 @@
 	}
 	.lane-label {
 		font-family: var(--font-body);
-		font-size: 14px;
+		font-size: 16px;
 		letter-spacing: 0.22em;
 		text-transform: uppercase;
 		font-weight: 500;
 	}
 	.year-label {
 		font-family: var(--font-mono, ui-monospace);
-		font-size: 13px;
+		font-size: 15px;
 		fill: var(--ink-mute);
 	}
 	.now-label {
 		font-family: var(--font-body);
-		font-size: 12px;
+		font-size: 14px;
 		letter-spacing: 0.24em;
 		text-transform: uppercase;
 		font-weight: 500;
 	}
-	.commit-title {
+	.cap-text {
 		font-family: var(--font-body);
-		font-size: 13px;
-		font-weight: 500;
+		font-size: 14px;
+		font-weight: 600;
 		pointer-events: none;
-		white-space: nowrap;
-		transition: fill 180ms ease;
+		line-height: 1.3;
 	}
 
-	/* Commit hover: glow via CSS custom property set inline */
 	.commit {
 		cursor: pointer;
 		transition: filter 200ms ease;
@@ -424,7 +442,6 @@
 		filter: drop-shadow(0 0 10px var(--c)) drop-shadow(0 0 4px var(--c));
 	}
 
-	/* Tooltip */
 	.commit-tooltip {
 		position: fixed;
 		z-index: 200;
@@ -488,7 +505,6 @@
 		letter-spacing: 0.04em;
 	}
 
-	/* Mobile list */
 	.vertical-list {
 		display: none;
 		flex-direction: column;

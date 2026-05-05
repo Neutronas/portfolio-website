@@ -97,7 +97,7 @@
 			"year": 2025,
 			"title": "ScanKaunas",
 			"tags": ["next.js", "supabase", "game"],
-			"summary": "City exploration game for Kaunas — scan QR codes for facts, audio and secrets. Achievements, leaderboard, admin panel, LT/EN.",
+			"summary": "City exploration game for Kaunas - scan QR codes for facts, audio and secrets. Achievements, leaderboard, admin panel, LT/EN.",
 			"links": []
 		}
 	]

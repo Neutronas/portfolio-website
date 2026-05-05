@@ -58,7 +58,7 @@
 			<p class="eyebrow">Biography</p>
 			<h2>Time travel, horizontally.</h2>
 			<p class="lede">
-				Scroll — the years move. Each card is a small chapter: a town, a hobby, a game played
+				Scroll - the years move. Each card is a small chapter: a town, a hobby, a game played
 				too many hours, a family.
 			</p>
 			<div class="hint"><ScrollHint label="Keep scrolling" /></div>
