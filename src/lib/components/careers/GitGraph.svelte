@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import careers from '$lib/data/careers.json';
-	import { loadGsap, prefersReducedMotion } from '$lib/utils/gsap';
 
 	type Commit = (typeof careers.commits)[number];
 	type Branch = (typeof careers.branches)[number];
@@ -125,8 +124,6 @@
 		return `${fmt(f)} — ${t ? fmt(t) : 'present'}`;
 	};
 
-	let pinEl: HTMLDivElement | null = $state(null);
-	let trackEl: HTMLDivElement | null = $state(null);
 	let sectionEl: HTMLDivElement | null = $state(null);
 	let active = $state(false);
 
@@ -170,49 +167,12 @@
 		);
 		io.observe(sectionEl);
 
-		if (!pinEl || !trackEl) return () => io.disconnect();
-		const mq = window.matchMedia('(min-width: 820px)');
-		if (prefersReducedMotion() || !mq.matches) return () => io.disconnect();
-
-		let cleanup: () => void = () => io.disconnect();
-		(async () => {
-			const gsap = await loadGsap();
-			const { ScrollTrigger } = await import('gsap/ScrollTrigger');
-
-			if (!trackEl || !pinEl) return;
-			const getScroll = () => {
-				if (!trackEl) return 0;
-				return Math.max(0, trackEl.scrollWidth - window.innerWidth);
-			};
-
-			const tween = gsap.to(trackEl, {
-				x: () => -getScroll(),
-				ease: 'none',
-				scrollTrigger: {
-					trigger: pinEl,
-					pin: true,
-					scrub: 0.8,
-					anticipatePin: 1,
-					end: () => `+=${getScroll()}`,
-					invalidateOnRefresh: true
-				}
-			});
-
-			cleanup = () => {
-				tween.scrollTrigger?.kill();
-				tween.kill();
-				ScrollTrigger.getAll().forEach((s) => s.kill());
-				io.disconnect();
-			};
-		})();
-
-		return () => cleanup();
+		return () => io.disconnect();
 	});
 </script>
 
 <div class="graph-wrap" bind:this={sectionEl} class:active>
-	<div class="pin" bind:this={pinEl}>
-		<div class="track" bind:this={trackEl}>
+	<div class="graph-container">
 			<svg
 				class="graph-svg"
 				viewBox="0 0 {width} {height}"
@@ -355,7 +315,6 @@
 					</g>
 				{/each}
 			</svg>
-		</div>
 	</div>
 
 	<!-- Tooltip overlay (desktop, fixed-position) -->
@@ -409,11 +368,8 @@
 	.graph-wrap {
 		width: 100%;
 	}
-	.pin {
-		height: 100vh;
-		display: flex;
-		align-items: center;
-		overflow: hidden;
+	.graph-container {
+		padding: var(--space-8) var(--space-6);
 		background:
 			radial-gradient(
 				ellipse 60% 50% at 50% 50%,
@@ -421,17 +377,10 @@
 				transparent 70%
 			);
 	}
-	.track {
-		display: flex;
-		align-items: center;
-		padding: 0 6vw;
-		will-change: transform;
-	}
 	.graph-svg {
-		flex: 0 0 auto;
 		display: block;
-		width: 2400px;
-		height: 680px;
+		width: 100%;
+		height: auto;
 		background: var(--bg-paper);
 		border-radius: var(--radius-lg);
 		border: 1px solid var(--line-hair);
@@ -616,7 +565,7 @@
 	}
 
 	@media (max-width: 819px) {
-		.pin {
+		.graph-container {
 			display: none;
 		}
 		.vertical-list {
@@ -627,16 +576,6 @@
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.pin {
-			height: auto;
-			overflow: visible;
-			padding: var(--space-8) 0;
-		}
-		.track {
-			transform: none !important;
-			padding: 0 var(--space-6);
-			overflow-x: auto;
-		}
 		.commit {
 			transition: none;
 		}

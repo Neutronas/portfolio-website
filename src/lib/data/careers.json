@@ -39,7 +39,7 @@
 			"branch": "education",
 			"from": "2013-09",
 			"to": "2017-06",
-			"title": "KTU — BSc in Informatics",
+			"title": "Kaunas University of Technology — BSc in Informatics",
 			"summary": "Bachelor's degree in Information Technology at Kaunas University of Technology.",
 			"tooltip": {
 				"details": [
@@ -86,7 +86,7 @@
 			"branch": "education",
 			"from": "2017-09",
 			"to": "2019-06",
-			"title": "KTU — MSc in Information Systems Engineering",
+			"title": "Kaunas University of Technology — MSc in Information Systems Engineering",
 			"summary": "Graduated with honours.",
 			"tooltip": {
 				"details": [
@@ -102,7 +102,7 @@
 			"branch": "work",
 			"from": "2017-09",
 			"to": "2020-06",
-			"title": "KTU — Academic Assistant",
+			"title": "Kaunas University of Technology — Academic Assistant",
 			"summary": "Lectured workshops; taught relational databases and PHP.",
 			"tooltip": {
 				"details": [
