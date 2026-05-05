@@ -155,6 +155,7 @@
 	}
 
 	onMount(() => {
+		window.scrollTo(0, 0);
 		if (!sectionEl) return;
 		const io = new IntersectionObserver(
 			(entries) => {

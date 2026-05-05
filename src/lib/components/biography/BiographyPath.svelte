@@ -12,6 +12,7 @@
 	let trackEl: HTMLDivElement | null = $state(null);
 
 	onMount(() => {
+		window.scrollTo(0, 0);
 		if (!pinEl || !trackEl) return;
 		const mq = window.matchMedia('(min-width: 820px)');
 		if (prefersReducedMotion() || !mq.matches) return;
