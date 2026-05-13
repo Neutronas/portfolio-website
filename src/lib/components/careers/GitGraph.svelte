@@ -208,7 +208,7 @@
 			class="graph-svg"
 			viewBox="0 0 {width} {height}"
 			preserveAspectRatio="xMidYMid meet"
-			aria-label="Careers timeline"
+			aria-label="Career timeline"
 			role="img"
 		>
 			<defs>
@@ -379,7 +379,7 @@
 		</div>
 	{/if}
 
-	<ul class="vertical-list" aria-label="Careers timeline (list view)">
+	<ul class="vertical-list" aria-label="Career timeline (list view)">
 		{#each commitsDesc as c, i (c.id)}
 			<li
 				class="v-commit"

@@ -13,10 +13,10 @@
 	const options: Option[] = [
 		{
 			id: 'careers',
-			label: 'Careers',
-			kicker: 'the git graph',
+			label: 'Career',
+			kicker: 'the choices',
 			description:
-				'A branching timeline of jobs and studies - some running in parallel, some merging back in.',
+				'Forks in the road - studies picked, jobs chosen, directions that merged back in.',
 			glyph: 'careers'
 		},
 		{

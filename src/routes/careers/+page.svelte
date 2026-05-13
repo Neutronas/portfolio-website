@@ -3,10 +3,10 @@
 </script>
 
 <svelte:head>
-	<title>Careers - Lukas Ružauskas</title>
-	<meta name="description" content="Career timeline of Lukas Ružauskas (Ruzauskas) - from web development to systems analysis and AI engineering, currently at Dassault Systèmes in Kaunas, Lithuania." />
+	<title>Career - Lukas Ružauskas</title>
+	<meta name="description" content="Career choices of Lukas Ružauskas (Ruzauskas) - studies, jobs, and the forks in the road from web development to systems analysis and AI engineering." />
 	<link rel="canonical" href="https://ruzauskas.lt/careers/" />
-	<meta property="og:title" content="Careers - Lukas Ružauskas" />
+	<meta property="og:title" content="Career - Lukas Ružauskas" />
 	<meta property="og:url" content="https://ruzauskas.lt/careers/" />
 </svelte:head>
 

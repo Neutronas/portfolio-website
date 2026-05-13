@@ -7,7 +7,7 @@
 
 	const others: { id: Path; label: string }[] = (
 		[
-			{ id: 'careers', label: 'Careers' },
+			{ id: 'careers', label: 'Career' },
 			{ id: 'biography', label: 'Biography' },
 			{ id: 'projects', label: 'Projects' }
 		] as const

@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 
 	const labels: Record<string, string> = {
-		'/careers/': 'Careers',
+		'/careers/': 'Career',
 		'/biography/': 'Biography',
 		'/projects/': 'Projects'
 	};

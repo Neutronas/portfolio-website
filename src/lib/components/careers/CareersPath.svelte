@@ -8,7 +8,7 @@
 <section class="careers-path" id="careers-content">
 	<header class="intro">
 		<Reveal>
-			<p class="eyebrow">Careers</p>
+			<p class="eyebrow">Career</p>
 			<h2>The branching timeline.</h2>
 		</Reveal>
 	</header>
