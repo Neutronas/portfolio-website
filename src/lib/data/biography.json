@@ -25,19 +25,22 @@
 			"id": "html",
 			"year": 2005,
 			"title": "First websites at age 11",
-			"body": "HTML by view-source, one more <div> at midnight. No tutorials, just patience and the refresh button. That's where it clicked."
+			"body": "HTML by view-source, one more <div> at midnight. No tutorials, just patience and the refresh button. That's where it clicked.",
+			"image": { "src": "/img/bio/firstWebsites.png", "alt": "First websites built by hand" }
 		},
 		{
 			"id": "servers",
 			"year": 2008,
 			"title": "Game servers and Linux",
-			"body": "Counter-Strike, Team Fortress 2, Minecraft, San-Andreas. Hosting for friends, breaking things for fun. Linux started as a side effect and became the point."
+			"body": "Counter-Strike, Team Fortress 2, Minecraft, San-Andreas. Hosting for friends, breaking things for fun. Linux started as a side effect and became the point.",
+			"image": { "src": "/img/bio/firstServers.png", "alt": "First game servers and Linux" }
 		},
 		{
 			"id": "kiberzona",
 			"year": 2010,
 			"title": "Admin at Kiberzona",
-			"body": "The biggest gaming community in Lithuania. Thousands of players, a long education in how online people actually behave. Creating websites, hosting servers."
+			"body": "The biggest gaming community in Lithuania. Thousands of players, a long education in how online people actually behave. Creating websites, hosting servers.",
+			"image": { "src": "/img/bio/kiberzona.png", "alt": "Admin at Kiberzona gaming community" }
 		},
 		{
 			"id": "esports",

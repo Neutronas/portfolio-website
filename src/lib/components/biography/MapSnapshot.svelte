@@ -72,9 +72,7 @@
 <style>
 	.map {
 		margin: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
+		position: relative;
 	}
 	.map-canvas {
 		width: 100%;
@@ -90,14 +88,24 @@
 		opacity: 1;
 	}
 	.map-label {
+		position: absolute;
+		left: 0.5rem;
+		bottom: 0.5rem;
+		z-index: 1000;
+		pointer-events: none;
 		font-family: var(--font-body);
 		font-size: var(--step--1);
-		color: var(--ink-mute);
+		color: var(--ink-soft);
 		letter-spacing: 0.2em;
 		text-transform: uppercase;
 		display: inline-flex;
 		align-items: center;
 		gap: 0.5rem;
+		padding: 0.3rem 0.6rem;
+		background: rgba(255, 255, 255, 0.88);
+		border: 1px solid var(--line-hair);
+		border-radius: var(--radius-sm);
+		backdrop-filter: blur(2px);
 	}
 	.pin {
 		width: 8px;
