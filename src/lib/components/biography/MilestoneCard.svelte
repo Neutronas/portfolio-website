@@ -19,7 +19,7 @@
 		<span class="year-dot"></span>
 		<span class="year-line"></span>
 	</div>
-	<div class="content">
+	<div class="content" class:has-media={!!(milestone.image || milestone.map)}>
 		<span class="year">{milestone.year}</span>
 		<h3 class="title">{milestone.title}</h3>
 		{#if milestone.body}
@@ -93,8 +93,15 @@
 		flex: 1;
 		min-height: 0;
 	}
+	.content.has-media {
+		/* Reserve space for absolutely-positioned media so text doesn't overlap */
+		padding-bottom: calc(100% * 10 / 16 + var(--space-4));
+	}
 	.media-slot {
-		margin-top: auto;
+		position: absolute;
+		bottom: var(--space-8);
+		left: var(--space-8);
+		right: var(--space-8);
 	}
 	.year-rail {
 		display: flex;
