@@ -95,7 +95,7 @@
 	}
 	.content.has-media {
 		/* Reserve space for absolutely-positioned media so text doesn't overlap */
-		padding-bottom: calc(100% * 10 / 16 + var(--space-4));
+		padding-bottom: calc(100% * 10 / 16 + var(--space-6));
 	}
 	.media-slot {
 		position: absolute;
