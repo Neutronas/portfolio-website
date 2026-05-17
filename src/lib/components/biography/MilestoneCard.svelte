@@ -50,7 +50,7 @@
 	.milestone {
 		flex: 0 0 auto;
 		width: min(86vw, 420px);
-		height: 660px;
+		height: 560px;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-4);
@@ -89,6 +89,7 @@
 	.content {
 		display: flex;
 		flex-direction: column;
+		justify-content: flex-end;
 		gap: var(--space-3);
 		flex: 1;
 		min-height: 0;
@@ -136,6 +137,12 @@
 		margin: 0;
 		line-height: 1.15;
 		letter-spacing: -0.015em;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+		overflow: hidden;
+		min-height: calc(1.15em * 2);
 	}
 	.body {
 		font-family: var(--font-body);
@@ -143,6 +150,13 @@
 		color: var(--ink-soft);
 		margin: 0;
 		max-width: 44ch;
+		line-height: 1.55;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		line-clamp: 3;
+		overflow: hidden;
+		min-height: calc(1.55em * 3);
 	}
 	@media (max-width: 819px) {
 		.milestone {
