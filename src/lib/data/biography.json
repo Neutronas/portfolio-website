@@ -12,7 +12,7 @@
 			"year": 1997,
 			"title": "First computer at age 3",
 			"body": "A beige box in the corner of the room. I was small enough that the keyboard felt enormous, but the curiosity stuck - and hasn't left.",
-			"image": { "src": "", "alt": "Young Lukas with his first computer" }
+			"image": { "src": "/img/bio/nearPC.png", "alt": "Young Lukas with his first computer" }
 		},
 		{
 			"id": "kaunas",
