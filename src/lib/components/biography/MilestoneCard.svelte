@@ -50,7 +50,7 @@
 	.milestone {
 		flex: 0 0 auto;
 		width: min(86vw, 420px);
-		height: 560px;
+		height: 660px;
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-4);
@@ -92,10 +92,11 @@
 		gap: var(--space-3);
 		flex: 1;
 		min-height: 0;
+		overflow: hidden;
 	}
 	.content.has-media {
 		/* Reserve space for absolutely-positioned media so text doesn't overlap */
-		padding-bottom: calc(100% * 10 / 16 + var(--space-6));
+		padding-bottom: calc(100% * 10 / 16 + var(--space-8));
 	}
 	.media-slot {
 		position: absolute;
