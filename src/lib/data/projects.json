@@ -99,6 +99,14 @@
 			"tags": ["next.js", "supabase", "game"],
 			"summary": "City exploration game for Kaunas - scan QR codes for facts, audio and secrets. Achievements, leaderboard, admin panel, LT/EN.",
 			"links": []
+		},
+		{
+			"id": "burnmark",
+			"year": 2026,
+			"title": "Burnmark",
+			"tags": ["next.js", "socket.io", "game"],
+			"summary": "Two-player online co-op escape thriller. One plays the Detective at a fake-OS desktop, the other plays the Victim locked in a room - voice only between them, no chat. Information asymmetry by design: each side holds half of every puzzle. Web first, Steam port planned.",
+			"links": [{ "label": "Live", "href": "https://burnmarkgame.com" }]
 		}
 	]
 }
