@@ -10,7 +10,7 @@ All copy lives in JSON under [`src/lib/data/`](./src/lib/data/):
 
 | File | What's in it |
 |---|---|
-| `contacts.json` | Name, tagline, focus line, email, social links |
+| `contacts.json` | Name, tagline, email, social links |
 | `careers.json` | Jobs and education (Career panel, right-monitor preview) |
 | `projects.json` | Projects with tags and links (Projects panel) |
 | `biography.json` | Life milestones + photos (Biography panel — easter egg via the desk photo) |

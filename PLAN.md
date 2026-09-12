@@ -50,7 +50,8 @@ papers = Resume. Easter eggs (not in menu): photo frame = Biography panel, PC to
 Targets: "Lukas Ruzauskas", "AI Product Engineer", "Agentic Coding".
 - Single title/description (app.html no longer duplicates them); OG/Twitter tags; JSON-LD @graph WebSite + ProfilePage + Person
   (alternateName incl. ASCII "Lukas Ruzauskas", jobTitle AI Product Engineer, knowsAbout Agentic Coding).
-- Visible text: eyebrow "Agentic coding // Kaunas, LT", tagline leads with "AI product engineer".
+- Visible text: tagline leads with "AI product engineer". "Agentic coding" is deliberately NOT visible anywhere
+  (user decision) — only in meta description, keywords and JSON-LD.
 - Sitemap: home + resume PDF. After merge: submit sitemap in Google Search Console.
 
 ## Open / next ideas

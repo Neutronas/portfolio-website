@@ -44,7 +44,7 @@
 
 	// ---- Search / social metadata (single source for the home page) ----
 	const SITE = 'https://ruzauskas.lt/';
-	const title = 'Lukas Ružauskas — AI Product Engineer & Agentic Coding';
+	const title = 'Lukas Ružauskas — AI Product Engineer';
 	const description =
 		'Lukas Ružauskas (Lukas Ruzauskas) — AI product engineer and software developer in Kaunas, Lithuania. Agentic coding, AI-powered tools and full-stack apps.';
 	const jsonLd = JSON.stringify({
@@ -236,7 +236,7 @@
 	<div class="grain" aria-hidden="true"></div>
 
 	<header class="brand">
-		<p class="eyebrow">{contacts.focus} <span aria-hidden="true">//</span> Kaunas, LT</p>
+		<p class="eyebrow">Portfolio <span aria-hidden="true">//</span> Kaunas, LT</p>
 		<h1><span class="first">{first}</span> <span class="last">{last}</span></h1>
 		<p class="tagline">{contacts.tagline}</p>
 	</header>
