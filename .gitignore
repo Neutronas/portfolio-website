@@ -1,5 +1,7 @@
 node_modules
 /build
+/.preview
+/.preview-builds
 /.svelte-kit
 /package
 .env

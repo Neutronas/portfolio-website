@@ -1,3 +1,10 @@
+<script lang="ts" module>
+	import { browser } from '$app/environment';
+	// Start downloading three.js as soon as this module is evaluated, in parallel with
+	// hydration, instead of waiting for onMount.
+	const sceneModule = browser ? import('$lib/scene/DeskScene') : null;
+</script>
+
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
@@ -22,21 +29,25 @@
 
 	let canvas: HTMLCanvasElement;
 	let scene: DeskScene | null = $state(null);
+	let shown = $state(false);
 
 	onMount(() => {
 		let disposed = false;
 		const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-		import('$lib/scene/DeskScene')
+		sceneModule!
 			.then(({ DeskScene }) => {
 				if (disposed) return;
 				scene = new DeskScene({
 					canvas,
 					name: contacts.name,
-					photoUrl: `${base}/img/bio/wedding.png`,
+					photoUrl: `${base}/img/bio/wedding.webp`,
 					reducedMotion,
 					onHover: (id) => onhover(id),
 					onSelect: (id) => onselect(id),
-					onReady: () => onready(true)
+					onReady: () => {
+						shown = true;
+						onready(true);
+					}
 				});
 			})
 			.catch((err) => {
@@ -58,7 +69,7 @@
 	});
 </script>
 
-<canvas bind:this={canvas} aria-hidden="true"></canvas>
+<canvas bind:this={canvas} class:shown aria-hidden="true"></canvas>
 
 <style>
 	canvas {
@@ -68,5 +79,10 @@
 		height: 100%;
 		display: block;
 		touch-action: manipulation;
+		opacity: 0;
+		transition: opacity 900ms ease;
+	}
+	canvas.shown {
+		opacity: 1;
 	}
 </style>

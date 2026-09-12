@@ -1,5 +1,8 @@
 <script lang="ts">
 	import '@fontsource-variable/oxanium';
+	import oxaniumLatin from '@fontsource-variable/oxanium/files/oxanium-latin-wght-normal.woff2?url';
+	import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+	import { base } from '$app/paths';
 	import { onMount } from 'svelte';
 	import { page } from '$app/state';
 	import { pushState, replaceState } from '$app/navigation';
@@ -11,7 +14,7 @@
 	import ProjectGrid from '$lib/components/game/ProjectGrid.svelte';
 	import BioTimeline from '$lib/components/game/BioTimeline.svelte';
 	import ContactCard from '$lib/components/game/ContactCard.svelte';
-	import { menuItems, previews, isPanel, type ItemId, type PanelId } from '$lib/game/content';
+	import { menuItems, previews, isPanel, milestones, type ItemId, type PanelId } from '$lib/game/content';
 
 	let selected: ItemId | null = $state(null);
 	let hover3d: ItemId | null = $state(null);
@@ -31,10 +34,24 @@
 	onMount(() => {
 		const h = location.hash.slice(1);
 		if (isPanel(h)) deepLink = selected = h;
-		// Never hang on the loader if the scene is slow to start.
-		const t = setTimeout(() => (ready = true), 6000);
+		// Never keep the loading hint forever if the scene is slow to start.
+		const t = setTimeout(() => (ready = true), 12000);
 		return () => clearTimeout(t);
 	});
+
+	/** Once the scene is up, quietly fetch what the panels and links will need. */
+	function prefetchRest() {
+		const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 300));
+		idle(() => {
+			for (const m of milestones) {
+				if (m.image) new Image().src = `${base}${m.image.src}`;
+			}
+			const link = document.createElement('link');
+			link.rel = 'prefetch';
+			link.href = `${base}/resume.pdf`;
+			document.head.append(link);
+		});
+	}
 
 	function openPanel(id: PanelId) {
 		if (openId === id) return;
@@ -105,6 +122,8 @@
 	/>
 	<meta name="theme-color" content="#08090c" />
 	<link rel="canonical" href="https://ruzauskas.lt/" />
+	<link rel="preload" href={oxaniumLatin} as="font" type="font/woff2" crossorigin="anonymous" />
+	<link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
 
 <svelte:window
@@ -125,13 +144,14 @@
 		onready={(ok) => {
 			flat = !ok;
 			ready = true;
+			if (ok) prefetchRest();
 		}}
 	/>
 
 	<div class="shade" aria-hidden="true"></div>
 	<div class="grain" aria-hidden="true"></div>
 
-	<header class="brand" class:visible={ready}>
+	<header class="brand">
 		<p class="eyebrow">Portfolio <span aria-hidden="true">//</span> Kaunas, LT</p>
 		<h1><span class="first">{first}</span> <span class="last">{last}</span></h1>
 		<p class="tagline">{contacts.tagline}</p>
@@ -141,13 +161,12 @@
 		items={menuItems}
 		{selected}
 		active={openId}
-		visible={ready}
 		bind:links
 		onselect={(id) => (selected = id)}
 		onactivate={activate}
 	/>
 
-	<footer class="hints" class:visible={ready} aria-hidden="true">
+	<footer class="hints" aria-hidden="true">
 		<span><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
 		<span><kbd>Enter</kbd> Select</span>
 		<span><kbd>Esc</kbd> Back</span>
@@ -174,7 +193,7 @@
 	</Panel>
 
 	<div class="loader" class:done={ready} aria-hidden="true">
-		<p class="loading">Loading</p>
+		<p class="loading">Loading scene</p>
 		<div class="bar"><span></span></div>
 		<p class="loader-tip">Tip: the mug is watching you.</p>
 	</div>
@@ -233,16 +252,14 @@
 		left: clamp(20px, 4.5vw, 72px);
 		z-index: 4;
 		max-width: min(560px, calc(100vw - 40px));
-		opacity: 0;
-		transform: translateY(-10px);
-		transition:
-			opacity 700ms ease,
-			transform 800ms var(--ease-out);
+		animation: brand-in 800ms var(--ease-out) both;
 		pointer-events: none;
 	}
-	.brand.visible {
-		opacity: 1;
-		transform: none;
+	@keyframes brand-in {
+		from {
+			opacity: 0;
+			transform: translateY(-10px);
+		}
 	}
 	.eyebrow {
 		margin: 0 0 0.6rem;
@@ -292,15 +309,16 @@
 		letter-spacing: 0.18em;
 		text-transform: uppercase;
 		color: rgba(220, 228, 238, 0.55);
-		opacity: 0;
-		transition: opacity 600ms ease 900ms;
+		animation: fade-in 600ms ease 700ms both;
+		transition: opacity 300ms ease;
 	}
-	.hints.visible {
-		opacity: 1;
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
 	}
 	.panel-open .hints {
 		opacity: 0;
-		transition-delay: 0s;
 	}
 	kbd {
 		display: inline-block;
@@ -335,18 +353,21 @@
 		margin-right: 0.4em;
 	}
 
+	/* Small hint over where the desk will appear; UI is usable meanwhile. */
 	.loader {
 		position: fixed;
-		inset: 0;
-		z-index: 20;
+		left: 50%;
+		top: 50%;
+		z-index: 3;
 		display: grid;
-		place-content: center;
 		justify-items: center;
-		gap: 0.9rem;
-		background: #07080b;
+		gap: 0.7rem;
+		transform: translate(10vw, -50%);
+		pointer-events: none;
+		animation: fade-in 400ms ease 300ms both;
 		transition:
-			opacity 700ms ease,
-			visibility 0s linear 700ms;
+			opacity 500ms ease,
+			visibility 0s linear 500ms;
 	}
 	.loader.done {
 		opacity: 0;
@@ -356,13 +377,13 @@
 		margin: 0;
 		font-family: var(--font-game);
 		font-weight: 700;
-		font-size: 0.9rem;
-		letter-spacing: 0.5em;
+		font-size: 0.75rem;
+		letter-spacing: 0.4em;
 		text-transform: uppercase;
-		color: #fff;
+		color: rgba(255, 255, 255, 0.8);
 	}
 	.bar {
-		width: 180px;
+		width: 160px;
 		height: 2px;
 		background: rgba(255, 255, 255, 0.1);
 		overflow: hidden;
@@ -384,14 +405,19 @@
 		}
 	}
 	.loader-tip {
-		margin: 0.6rem 0 0;
-		font-size: 0.8rem;
+		margin: 0.3rem 0 0;
+		font-size: 0.75rem;
 		color: #6c7a8b;
 	}
 
 	@media (hover: none), (max-width: 760px) {
 		.hints {
 			display: none;
+		}
+	}
+	@media (max-width: 1000px) and (orientation: portrait) {
+		.loader {
+			transform: translate(-50%, -80%);
 		}
 	}
 	@media (max-width: 760px) and (orientation: portrait) {
@@ -407,6 +433,11 @@
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
+		.brand,
+		.hints,
+		.loader {
+			animation: none;
+		}
 		.bar span {
 			animation: none;
 			width: 100%;

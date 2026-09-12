@@ -410,22 +410,22 @@ function glitchSlices(g: CanvasRenderingContext2D, k: number) {
 // ---------------------------------------------------------------------------
 
 export function woodTexture(): THREE.CanvasTexture {
-	const w = 2048;
-	const h = 1024;
+	const w = 1024;
+	const h = 512;
 	const { ctx: g, texture } = makeCanvas(w, h);
 	g.fillStyle = '#4a3122';
 	g.fillRect(0, 0, w, h);
 	// Long grain streaks with slow waviness
-	for (let i = 0; i < 900; i++) {
+	for (let i = 0; i < 450; i++) {
 		const y0 = Math.random() * h;
-		const amp = 4 + Math.random() * 14;
-		const freq = 0.001 + Math.random() * 0.003;
+		const amp = 2 + Math.random() * 7;
+		const freq = 0.002 + Math.random() * 0.006;
 		const phase = Math.random() * 10;
 		const light = Math.random() < 0.5;
 		g.strokeStyle = light
 			? `rgba(140,98,66,${0.05 + Math.random() * 0.12})`
 			: `rgba(28,17,10,${0.06 + Math.random() * 0.16})`;
-		g.lineWidth = 0.6 + Math.random() * 2.4;
+		g.lineWidth = 0.4 + Math.random() * 1.3;
 		g.beginPath();
 		for (let x = 0; x <= w; x += 32) {
 			const y = y0 + Math.sin(x * freq + phase) * amp;

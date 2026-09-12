@@ -1,6 +1,8 @@
 # Redesign plan — 3D desk "main menu" (branch `redesign`)
 
-Preview: https://dev.ruzauskas.lt (live Vite dev server of whatever branch is checked out).
+Preview: https://dev.ruzauskas.lt — production build of whatever branch is checked out,
+auto-rebuilt on file change (~7 s) with automatic tab reload (`scripts/preview-server.mjs`,
+service `ruzauskas-preview`, decision 003).
 
 ## Concept
 Full-screen night-time 3D scene: desk, two monitors, keyboard, mouse, lamp, PC tower,
@@ -33,6 +35,12 @@ Scene objects are clickable and map to menu items; selected item previews on rig
 
 Object ↔ menu mapping: left monitor = Projects, right monitor = Career, mug = Contact,
 PC tower = GitHub, photo frame = Biography, papers = Resume.
+
+## Performance (2026-09-12)
+- Menu/title render from prerendered HTML + CSS animation, no waiting for JS or 3D (menu visible ~0.2 s).
+- three.js chunk import starts at module eval; shaders compiled with `compileAsync` before first frame.
+- Dropped RectAreaLights (heavy shaders) for a point light; PCF shadows; smaller wood texture.
+- Bio images PNG→WebP (1.5 MB → 190 KB); fonts preloaded; after scene is ready, idle-prefetch bio images + resume.pdf.
 
 ## Open / next ideas
 - Old routes `/careers`, `/biography`, `/projects` still exist (old light design) — delete or redirect once happy.

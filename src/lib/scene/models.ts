@@ -95,11 +95,7 @@ export function buildMonitor(screenTex: THREE.Texture) {
 	screenMat.color.setScalar(1.15);
 	const screen = new THREE.Mesh(new THREE.PlaneGeometry(0.62, 0.349), screenMat);
 	screen.position.set(0, 0.007, 0.03 + 0.0132);
-	// Screen light spill onto keyboard / desk
-	const spill = new THREE.RectAreaLight('#9fd8f0', 1.6, 0.6, 0.34);
-	spill.position.set(0, 0.007, 0.05);
-	spill.rotation.y = Math.PI;
-	pivot.add(body, hump, screen, spill);
+	pivot.add(body, hump, screen);
 	root.add(base, neck, pivot);
 	return { root, pivot, screen };
 }

@@ -5,7 +5,6 @@
 		items,
 		selected,
 		active,
-		visible,
 		onselect,
 		onactivate,
 		links = $bindable([])
@@ -13,14 +12,13 @@
 		items: MenuItem[];
 		selected: ItemId | null;
 		active: string | null;
-		visible: boolean;
 		onselect: (id: ItemId) => void;
 		onactivate: (id: ItemId) => void;
 		links?: HTMLAnchorElement[];
 	} = $props();
 </script>
 
-<nav class="menu" class:visible aria-label="Main menu">
+<nav class="menu" aria-label="Main menu">
 	<ul>
 		{#each items as item, i (item.id)}
 			<li style="--i: {i}">
@@ -63,17 +61,16 @@
 		flex-direction: column;
 		gap: 2px;
 	}
+	/* Pure CSS entrance: runs on first paint, no waiting for JS or the 3D scene. */
 	li {
-		opacity: 0;
-		transform: translateX(-24px);
-		transition:
-			opacity 500ms var(--ease-out),
-			transform 600ms var(--ease-out);
-		transition-delay: calc(var(--i) * 60ms + 150ms);
+		animation: menu-in 600ms var(--ease-out) both;
+		animation-delay: calc(var(--i) * 55ms + 120ms);
 	}
-	.visible li {
-		opacity: 1;
-		transform: none;
+	@keyframes menu-in {
+		from {
+			opacity: 0;
+			transform: translateX(-24px);
+		}
 	}
 	a {
 		position: relative;
@@ -166,7 +163,9 @@
 		opacity: 0.7;
 	}
 	@media (prefers-reduced-motion: reduce) {
-		li,
+		li {
+			animation: none;
+		}
 		a,
 		a::before {
 			transition: none;

@@ -15,7 +15,6 @@ export default defineConfig({
 			'three/examples/jsm/postprocessing/UnrealBloomPass.js',
 			'three/examples/jsm/postprocessing/OutputPass.js',
 			'three/examples/jsm/environments/RoomEnvironment.js',
-			'three/examples/jsm/lights/RectAreaLightUniformsLib.js',
 			'three/examples/jsm/geometries/RoundedBoxGeometry.js'
 		]
 	},

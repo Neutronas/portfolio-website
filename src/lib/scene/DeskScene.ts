@@ -4,7 +4,6 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
-import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
 import {
 	DESK_Y,
 	buildDesk,
@@ -57,6 +56,7 @@ export class DeskScene {
 	private frames = 0;
 	private slowFrames = 0;
 	private ready = false;
+	private disposed = false;
 
 	// Input
 	private pointer = new THREE.Vector2();
@@ -111,8 +111,7 @@ export class DeskScene {
 		this.renderer.toneMapping = THREE.NeutralToneMapping;
 		this.renderer.toneMappingExposure = 1.0;
 		this.renderer.shadowMap.enabled = true;
-		this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-		RectAreaLightUniformsLib.init();
+		this.renderer.shadowMap.type = THREE.PCFShadowMap;
 
 		const bg = new THREE.Color('#08090c');
 		this.scene.background = bg;
@@ -140,6 +139,22 @@ export class DeskScene {
 		window.addEventListener('pointerdown', this.onPointerDown, { passive: true });
 		window.addEventListener('pointerup', this.onPointerUp);
 		document.addEventListener('pointerleave', this.onPointerLeave);
+		void this.start();
+	}
+
+	/**
+	 * Compile every shader before the first frame. With KHR_parallel_shader_compile this
+	 * happens off the main thread, so the page stays responsive instead of freezing on
+	 * the first render (slow on ANGLE/Metal in particular).
+	 */
+	private async start() {
+		try {
+			await this.renderer.compileAsync(this.scene, this.camera);
+		} catch {
+			// Fall back to compiling on first render.
+		}
+		if (this.disposed) return;
+		this.clock.getDelta();
 		this.raf = requestAnimationFrame(this.loop);
 	}
 
@@ -163,6 +178,7 @@ export class DeskScene {
 	}
 
 	dispose() {
+		this.disposed = true;
 		cancelAnimationFrame(this.raf);
 		this.resizeObs.disconnect();
 		window.removeEventListener('pointermove', this.onPointerMove);
@@ -199,7 +215,10 @@ export class DeskScene {
 		s.add(moon);
 		const bias = new THREE.PointLight('#58c4e0', 1.4, 1.6, 1.6);
 		bias.position.set(0, DESK_Y + 0.28, -0.5);
-		s.add(bias);
+		// Screen glow spilling onto keyboard and desk (cheap stand-in for area lights)
+		const spill = new THREE.PointLight('#8fd3ee', 0.9, 1.1, 1.6);
+		spill.position.set(0, DESK_Y + 0.3, 0.02);
+		s.add(bias, spill);
 
 		// Monitors, turned slightly inward
 		const screens = [this.code.texture, this.info.texture];
