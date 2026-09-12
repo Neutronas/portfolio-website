@@ -33,8 +33,12 @@ Scene objects are clickable and map to menu items; selected item previews on rig
 - [x] 8. Mobile / reduced motion / no-WebGL fallback / perf (adaptive DPR, bloom off)
 - [x] 9. `npm run check` + `npm run build` clean, commit
 
-Object ↔ menu mapping: left monitor = Projects, right monitor = Career, mug = Contact,
-PC tower = GitHub, photo frame = Biography, papers = Resume.
+Menu: Career, Projects, Resume, Contact. Resume opens an in-page pdf.js viewer
+(`ResumeViewer.svelte`, file `static/Lukas_Ruzauskas.pdf`) with Download / Open buttons.
+GitHub + LinkedIn live only in the Contact panel.
+
+Object ↔ item mapping: left monitor = Projects, right monitor = Career, mug = Contact,
+papers = Resume. Easter eggs (not in menu): photo frame = Biography panel, PC tower = GitHub.
 
 ## Performance (2026-09-12)
 - Menu/title render from prerendered HTML + CSS animation, no waiting for JS or 3D (menu visible ~0.2 s).

@@ -4,8 +4,8 @@ import projectsData from '$lib/data/projects.json';
 import biographyData from '$lib/data/biography.json';
 import type { Preview } from '$lib/scene/screens';
 
-export type ItemId = 'career' | 'projects' | 'biography' | 'resume' | 'github' | 'linkedin' | 'contact';
-export type PanelId = 'career' | 'projects' | 'biography' | 'contact';
+export type ItemId = 'career' | 'projects' | 'resume' | 'contact' | 'biography' | 'github';
+export type PanelId = 'career' | 'projects' | 'resume' | 'contact' | 'biography';
 
 export interface MenuItem {
 	id: ItemId;
@@ -16,17 +16,24 @@ export interface MenuItem {
 
 const social = (label: string) => contacts.links.find((l) => l.label === label)?.href ?? '#';
 
+export const resumeFile = 'Lukas_Ruzauskas.pdf';
+
 export const menuItems: MenuItem[] = [
 	{ id: 'career', label: 'Career', href: '#career', external: false },
 	{ id: 'projects', label: 'Projects', href: '#projects', external: false },
-	{ id: 'biography', label: 'Biography', href: '#biography', external: false },
-	{ id: 'resume', label: 'Resume', href: '/resume.pdf', external: true },
-	{ id: 'github', label: 'GitHub', href: social('GitHub'), external: true },
-	{ id: 'linkedin', label: 'LinkedIn', href: social('LinkedIn'), external: true },
+	{ id: 'resume', label: 'Resume', href: '#resume', external: false },
 	{ id: 'contact', label: 'Contact', href: '#contact', external: false }
 ];
 
-export const panelIds: PanelId[] = ['career', 'projects', 'biography', 'contact'];
+/** Not in the menu — only reachable by clicking desk objects (photo frame, PC tower). */
+export const hiddenItems: MenuItem[] = [
+	{ id: 'biography', label: 'Biography', href: '#biography', external: false },
+	{ id: 'github', label: 'GitHub', href: social('GitHub'), external: true }
+];
+
+export const allItems = [...menuItems, ...hiddenItems];
+
+export const panelIds: PanelId[] = ['career', 'projects', 'resume', 'contact', 'biography'];
 export const isPanel = (id: string): id is PanelId => (panelIds as string[]).includes(id);
 
 export type CareerEntry = (typeof careers.commits)[number];
@@ -44,7 +51,11 @@ export const careerEntries: CareerEntry[] = [...careers.commits].sort((a, b) => 
 export const projects = [...projectsData.projects].sort((a, b) => b.year - a.year);
 export const milestones = biographyData.milestones;
 
-const index = (id: ItemId) => String(menuItems.findIndex((m) => m.id === id) + 1).padStart(2, '0');
+export const indexOf = (id: string) => {
+	const i = menuItems.findIndex((m) => m.id === id);
+	return i < 0 ? '??' : String(i + 1).padStart(2, '0');
+};
+const index = indexOf;
 const host = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 const shortTitle = (t: string) => t.split(' - ')[0];
 
@@ -64,6 +75,12 @@ export const previews: Record<ItemId, Preview> = {
 		lines: projects.slice(0, 5).map((p) => `${p.year}   ${p.title}`),
 		hint: 'ENTER ↵  BROWSE PROJECTS'
 	},
+	resume: {
+		index: index('resume'),
+		title: 'Resume',
+		lines: ['One page, current roles first', 'Read it here or download the PDF'],
+		hint: 'ENTER ↵  VIEW RESUME'
+	},
 	biography: {
 		index: index('biography'),
 		title: 'Biography',
@@ -71,30 +88,18 @@ export const previews: Record<ItemId, Preview> = {
 			.map((i) => milestones[i])
 			.filter(Boolean)
 			.map((m) => `${m.year}   ${m.title}`),
-		hint: 'ENTER ↵  READ THE STORY'
-	},
-	resume: {
-		index: index('resume'),
-		title: 'Resume',
-		lines: ['One-page PDF', contacts.name, contacts.tagline],
-		hint: 'ENTER ↵  OPEN PDF'
+		hint: 'CLICK  ·  SECRET CHAPTER'
 	},
 	github: {
 		index: index('github'),
 		title: 'GitHub',
 		lines: [host(social('GitHub')), 'Code, experiments and side projects'],
-		hint: 'ENTER ↵  OPEN GITHUB'
-	},
-	linkedin: {
-		index: index('linkedin'),
-		title: 'LinkedIn',
-		lines: [host(social('LinkedIn')), 'Professional profile'],
-		hint: 'ENTER ↵  OPEN LINKEDIN'
+		hint: 'CLICK ↗  OPEN GITHUB'
 	},
 	contact: {
 		index: index('contact'),
 		title: 'Contact',
-		lines: [contacts.email, 'A role, a project, a conversation —', 'get in touch.'],
+		lines: [contacts.email, 'GitHub  ·  LinkedIn', 'A role, a project, a conversation — get in touch.'],
 		hint: 'ENTER ↵  SAY HELLO'
 	}
 };

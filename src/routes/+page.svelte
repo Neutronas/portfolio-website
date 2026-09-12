@@ -14,7 +14,19 @@
 	import ProjectGrid from '$lib/components/game/ProjectGrid.svelte';
 	import BioTimeline from '$lib/components/game/BioTimeline.svelte';
 	import ContactCard from '$lib/components/game/ContactCard.svelte';
-	import { menuItems, previews, isPanel, milestones, type ItemId, type PanelId } from '$lib/game/content';
+	import ResumeViewer from '$lib/components/game/ResumeViewer.svelte';
+	import { loadPdf } from '$lib/game/pdf';
+	import {
+		allItems,
+		indexOf,
+		menuItems,
+		previews,
+		isPanel,
+		milestones,
+		resumeFile,
+		type ItemId,
+		type PanelId
+	} from '$lib/game/content';
 
 	let selected: ItemId | null = $state(null);
 	let hover3d: ItemId | null = $state(null);
@@ -28,8 +40,12 @@
 	const preview = $derived(selected ? previews[selected] : null);
 	const [first, ...rest] = contacts.name.split(' ');
 	const last = rest.join(' ');
-	const itemOf = (id: string) => menuItems.find((m) => m.id === id);
-	const indexOf = (id: string) => String(menuItems.findIndex((m) => m.id === id) + 1).padStart(2, '0');
+	const itemOf = (id: string) => allItems.find((m) => m.id === id);
+
+	// Warm up the resume viewer as soon as someone points at "Resume".
+	$effect(() => {
+		if (selected === 'resume') void loadPdf(`${base}/${resumeFile}`);
+	});
 
 	onMount(() => {
 		const h = location.hash.slice(1);
@@ -48,7 +64,7 @@
 			}
 			const link = document.createElement('link');
 			link.rel = 'prefetch';
-			link.href = `${base}/resume.pdf`;
+			link.href = `${base}/${resumeFile}`;
 			document.head.append(link);
 		});
 	}
@@ -185,11 +201,14 @@
 	<Panel id="projects" index={indexOf('projects')} title="Projects" subtitle="Things I built, ran or shipped" open={openId === 'projects'} onclose={closePanel}>
 		<ProjectGrid />
 	</Panel>
-	<Panel id="biography" index={indexOf('biography')} title="Biography" subtitle="The story so far" open={openId === 'biography'} onclose={closePanel}>
-		<BioTimeline />
+	<Panel id="resume" index={indexOf('resume')} title="Resume" subtitle="One page, current roles first" wide open={openId === 'resume'} onclose={closePanel}>
+		<ResumeViewer active={openId === 'resume'} />
 	</Panel>
 	<Panel id="contact" index={indexOf('contact')} title="Contact" open={openId === 'contact'} onclose={closePanel}>
 		<ContactCard />
+	</Panel>
+	<Panel id="biography" index="Secret chapter" title="Biography" subtitle="You found the photo — here's the story so far" open={openId === 'biography'} onclose={closePanel}>
+		<BioTimeline />
 	</Panel>
 
 	<div class="loader" class:done={ready} aria-hidden="true">

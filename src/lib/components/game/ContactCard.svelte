@@ -1,6 +1,7 @@
 <script lang="ts">
 	import contacts from '$lib/data/contacts.json';
 	import { base } from '$app/paths';
+	import { resumeFile } from '$lib/game/content';
 
 	let copied = $state(false);
 	async function copy() {
@@ -27,7 +28,7 @@
 	{#each contacts.links as l}
 		<li><a href={l.href} target="_blank" rel="noopener me">{l.label} ↗</a></li>
 	{/each}
-	<li><a href="{base}/resume.pdf" target="_blank" rel="noopener">Resume PDF ↗</a></li>
+	<li><a href="{base}/{resumeFile}" download={resumeFile}>Resume PDF ↓</a></li>
 </ul>
 
 <p class="where">Based in Kaunas, Lithuania.</p>

@@ -6,6 +6,7 @@
 		index,
 		title,
 		subtitle,
+		wide = false,
 		open,
 		onclose,
 		children
@@ -14,6 +15,7 @@
 		index: string;
 		title: string;
 		subtitle?: string;
+		wide?: boolean;
 		open: boolean;
 		onclose: () => void;
 		children: Snippet;
@@ -30,7 +32,7 @@
 	});
 </script>
 
-<section class="panel" class:open {id} aria-labelledby="{id}-title" inert={!open}>
+<section class="panel" class:open class:wide {id} aria-labelledby="{id}-title" inert={!open}>
 	<header>
 		<div class="heading">
 			<span class="idx">{index}</span>
@@ -71,6 +73,9 @@
 			opacity 260ms ease,
 			transform 420ms var(--ease-out),
 			visibility 0s linear 420ms;
+	}
+	.panel.wide {
+		width: min(860px, calc(100vw - 32px));
 	}
 	.panel.open {
 		opacity: 1;
