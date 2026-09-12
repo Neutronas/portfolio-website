@@ -4,7 +4,10 @@ declare global {
 		// interface Error {}
 		// interface Locals {}
 		// interface PageData {}
-		// interface PageState {}
+		interface PageState {
+			/** Open menu panel on the home page (shallow routing). */
+			panel?: string;
+		}
 		// interface Platform {}
 	}
 }

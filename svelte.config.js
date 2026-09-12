@@ -18,7 +18,8 @@ const config = {
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',
-			fallback: 'index.html',
+			// 404.html, not index.html: an index.html fallback overwrites the prerendered home page.
+			fallback: '404.html',
 			precompress: false,
 			strict: true
 		}),
