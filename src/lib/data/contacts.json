@@ -1,9 +1,16 @@
 {
 	"name": "Lukas Ružauskas",
-	"tagline": "Software developer, systems analyst & AI product engineer",
+	"tagline": "AI product engineer, software developer & systems analyst",
 	"email": "lukas.ruzauskas@gmail.com",
 	"links": [
-		{ "label": "GitHub", "href": "https://github.com/Neutronas" },
-		{ "label": "LinkedIn", "href": "https://linkedin.com/in/lukas-ruzauskas/" }
-	]
+		{
+			"label": "GitHub",
+			"href": "https://github.com/Neutronas"
+		},
+		{
+			"label": "LinkedIn",
+			"href": "https://linkedin.com/in/lukas-ruzauskas/"
+		}
+	],
+	"focus": "Agentic coding"
 }

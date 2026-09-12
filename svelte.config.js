@@ -4,6 +4,8 @@ import { relative, sep } from 'node:path';
 const base = process.env.BASE_PATH ?? '';
 // Preview server builds into its own folders (scripts/preview-server.mjs).
 const out = process.env.BUILD_DIR ?? 'build';
+// ...and uses its own work dir so it never collides with a manual build or dev server.
+const outDir = process.env.SVELTEKIT_OUT_DIR ?? '.svelte-kit';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -17,6 +19,7 @@ const config = {
 	},
 	kit: {
 		paths: { base },
+		outDir,
 		adapter: adapter({
 			pages: out,
 			assets: out,

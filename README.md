@@ -1,140 +1,54 @@
-# Lukas Ruzauskas - Portfolio Website
+# Lukas Ružauskas — ruzauskas.lt
 
-Personal portfolio site live at [ruzauskas.lt](https://ruzauskas.lt). A multi-page SvelteKit application with three interactive paths: **Careers**, **Biography**, and **Projects**.
-
-Built with SvelteKit + Svelte 5 (runes), GSAP scroll animations, and Leaflet maps. Deployed automatically to GitHub Pages on every push to `main`.
-
----
+Personal site: a full-screen 3D desk scene (three.js) with a game-style main menu.
+Menu items open in-page panels; everything is prerendered so search engines and
+screen readers get all content without WebGL.
 
 ## Editing content
 
-All copy lives in JSON files under [`src/lib/data/`](./src/lib/data/) - no code changes needed.
+All copy lives in JSON under [`src/lib/data/`](./src/lib/data/):
 
 | File | What's in it |
 |---|---|
-| `contacts.json` | Name, tagline, email, social links |
-| `careers.json` | Git-graph branches + commits (jobs, degrees, certs) |
-| `biography.json` | Ordered life milestones, optional map coords per entry |
-| `projects.json` | Chronological list of projects with tags + links |
+| `contacts.json` | Name, tagline, focus line, email, social links |
+| `careers.json` | Jobs and education (Career panel, right-monitor preview) |
+| `projects.json` | Projects with tags and links (Projects panel) |
+| `biography.json` | Life milestones + photos (Biography panel — easter egg via the desk photo) |
 
-### Adding a career entry
+Resume: replace `static/Lukas_Ruzauskas.pdf` (shown in the Resume panel via pdf.js, with download).
+Search metadata (title, description, Open Graph, JSON-LD) is in `src/routes/+page.svelte`.
 
-```jsonc
-{
-  "id": "unique-slug",
-  "branch": "work",          // education | work
-  "from": "2024-03",
-  "to": "2025-11",           // null = ongoing
-  "title": "Company - Role",
-  "summary": "Optional one-liner."
-}
-```
-
-### Adding a biography milestone
-
-```jsonc
-{
-  "id": "unique-slug",
-  "year": 2024,
-  "title": "What happened",
-  "body": "Short paragraph.",
-  "map": { "lat": 54.898, "lng": 23.904, "zoom": 11, "label": "Kaunas" }
-  // Omit "map" if no location.
-}
-```
-
-### Adding a project
-
-```jsonc
-{
-  "id": "unique-slug",
-  "year": 2024,
-  "title": "Project name",
-  "tags": ["tag", "tag"],
-  "summary": "One or two sentences.",
-  "links": [{ "label": "GitHub", "href": "https://..." }]
-}
-```
-
-### Styling
-
-Design tokens (colors, type scale, spacing) are CSS custom properties in [`src/app.css`](./src/app.css). The bronze accent (`--accent-bronze`) runs across all three paths.
-
----
-
-## Development
-
-Requirements: **Node 20+**, **npm 10+**
-
-```bash
-npm install
-npm run dev        # http://localhost:5173
-npm run check      # TypeScript + Svelte type-check
-npm run build      # static output -> build/
-npm run preview    # serve build/ locally
-```
-
----
-
-## Deployment
-
-Pushes to `main` automatically build and deploy to GitHub Pages via the workflow in [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml). The live URL is [ruzauskas.lt](https://ruzauskas.lt).
-
-### Custom domain
-
-The `static/CNAME` file points GitHub Pages to `ruzauskas.lt`. DNS setup required at your registrar:
-
-| Type | Name | Value |
-|---|---|---|
-| `A` | `@` | `185.199.108.153` |
-| `A` | `@` | `185.199.109.153` |
-| `A` | `@` | `185.199.110.153` |
-| `A` | `@` | `185.199.111.153` |
-| `CNAME` | `www` | `neutronas.github.io` |
-
-### Social preview
-
-Drop a 1200x630 JPG into `static/og.jpg` - already referenced by `<meta property="og:image">`.
-
----
-
-## Stack
-
-- **SvelteKit 2** + **Svelte 5** (runes) + `@sveltejs/adapter-static`
-- **GSAP 3** + ScrollTrigger - lazy-loaded for biography horizontal scroll
-- **Leaflet 1.9** + CartoDB Positron tiles - lazy-loaded near viewport
-- `@fontsource-variable/fraunces` (display) + `@fontsource-variable/inter` (body)
-- TypeScript, fully prerendered to static HTML
-
-## Architecture
+## Structure
 
 ```
 src/
 ├── routes/
-│   ├── +layout.svelte        fonts, nav shell, skip-link
-│   ├── +layout.ts            prerender = true
-│   ├── +page.svelte          landing page with path selector
-│   ├── biography/            horizontal scroll milestones + Leaflet maps
-│   ├── careers/              SVG timeline graph (desktop), card list (mobile)
-│   └── projects/             snap-scroll carousel
+│   ├── +page.svelte              home: scene + menu + panels + SEO head
+│   └── careers|biography|projects/  redirects to /#career etc. (old URLs)
 └── lib/
-    ├── data/*.json            all editable content
-    ├── components/
-    │   ├── Hero.svelte
-    │   ├── PathSelector.svelte
-    │   ├── PathNav.svelte
-    │   ├── careers/           GitGraph SVG + CareersPath
-    │   ├── biography/         GSAP pin + horizontal scrub + Leaflet maps
-    │   ├── projects/          snap-scroll carousel
-    │   ├── ending/            WhatsNext ("?" + email + replay)
-    │   └── ui/                Reveal, ScrollHint, MetalDivider
-    ├── stores/path.svelte.ts  runes state + URL-hash sync
-    └── utils/                 lazy GSAP + lazy Leaflet loaders
+    ├── scene/                    three.js scene, procedural models, monitor screens
+    ├── components/game/          MainMenu, Panel, panel contents, ResumeViewer, Scene
+    ├── game/                     menu items, previews, pdf.js loader
+    └── data/*.json               content
+scripts/preview-server.mjs        dev.ruzauskas.lt preview (prod build + auto-rebuild + live reload)
 ```
 
-### Accessibility
+Desk objects are clickable: left monitor = Projects, right monitor = Career,
+mug = Contact, papers = Resume, photo frame = Biography, PC tower = GitHub.
 
-- `prefers-reduced-motion` removes scroll animations; content still flows.
-- Biography horizontal scroll collapses to vertical stack below 820 px.
-- Careers graph switches to vertical card list on mobile.
-- Arrow keys navigate the Projects carousel. Skip-to-content link + bronze focus rings throughout.
+## Development
+
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm run check      # type-check
+npm run build      # static output -> build/
+```
+
+Pushes to `main` deploy to GitHub Pages ([`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml)).
+Work-in-progress branches are previewed at https://dev.ruzauskas.lt (noindex).
+
+## Stack
+
+SvelteKit 2 + Svelte 5 (runes), `@sveltejs/adapter-static`, three.js, pdf.js,
+Oxanium + Inter variable fonts.

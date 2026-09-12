@@ -42,6 +42,63 @@
 	const last = rest.join(' ');
 	const itemOf = (id: string) => allItems.find((m) => m.id === id);
 
+	// ---- Search / social metadata (single source for the home page) ----
+	const SITE = 'https://ruzauskas.lt/';
+	const title = 'Lukas Ružauskas — AI Product Engineer & Agentic Coding';
+	const description =
+		'Lukas Ružauskas (Lukas Ruzauskas) — AI product engineer and software developer in Kaunas, Lithuania. Agentic coding, AI-powered tools and full-stack apps.';
+	const jsonLd = JSON.stringify({
+		'@context': 'https://schema.org',
+		'@graph': [
+			{
+				'@type': 'WebSite',
+				'@id': `${SITE}#website`,
+				url: SITE,
+				name: contacts.name,
+				alternateName: ['Lukas Ruzauskas', 'ruzauskas.lt'],
+				inLanguage: 'en'
+			},
+			{
+				'@type': 'ProfilePage',
+				'@id': `${SITE}#profile`,
+				url: SITE,
+				name: title,
+				description,
+				isPartOf: { '@id': `${SITE}#website` },
+				dateModified: '2026-09-12',
+				mainEntity: { '@id': `${SITE}#person` }
+			},
+			{
+				'@type': 'Person',
+				'@id': `${SITE}#person`,
+				name: contacts.name,
+				alternateName: ['Lukas Ruzauskas', 'Ružauskas', 'Ruzauskas'],
+				url: SITE,
+				image: `${SITE}img/lukas.jpg`,
+				email: `mailto:${contacts.email}`,
+				jobTitle: ['AI Product Engineer', 'Software Developer', 'Systems Analyst', 'Product Owner'],
+				description:
+					'AI product engineer and software developer building AI-powered tools and full-stack apps with agentic coding. Product Owner / Systems Analyst for CATIA Magic at Dassault Systèmes.',
+				knowsAbout: [
+					'Agentic Coding',
+					'AI Product Engineering',
+					'AI Agents',
+					'Software Development',
+					'Systems Analysis',
+					'Product Management',
+					'MBSE',
+					'SysML',
+					'CATIA Magic',
+					'MagicDraw'
+				],
+				worksFor: { '@type': 'Organization', name: 'Dassault Systèmes' },
+				nationality: 'Lithuanian',
+				address: { '@type': 'PostalAddress', addressLocality: 'Kaunas', addressCountry: 'LT' },
+				sameAs: contacts.links.map((l) => l.href)
+			}
+		]
+	}).replace(/</g, '\\u003c');
+
 	// Warm up the resume viewer as soon as someone points at "Resume".
 	$effect(() => {
 		if (selected === 'resume') void loadPdf(`${base}/${resumeFile}`);
@@ -127,17 +184,28 @@
 </script>
 
 <svelte:head>
-	<title>Lukas Ružauskas - Software Developer, Systems Analyst & AI Product Engineer</title>
-	<meta
-		name="description"
-		content="Portfolio of Lukas Ružauskas (Lukas Ruzauskas) - software developer, systems analyst and AI product engineer based in Kaunas, Lithuania."
-	/>
+	<title>{title}</title>
+	<meta name="description" content={description} />
 	<meta
 		name="keywords"
-		content="Lukas Ruzauskas, Lukas Ružauskas, Ruzauskas, Ružauskas, software developer, systems analyst, AI product engineer, Lithuania, Kaunas, portfolio"
+		content="Lukas Ruzauskas, Lukas Ružauskas, AI Product Engineer, Agentic Coding, software developer, systems analyst, Kaunas, Lithuania"
 	/>
 	<meta name="theme-color" content="#08090c" />
-	<link rel="canonical" href="https://ruzauskas.lt/" />
+	<link rel="canonical" href={SITE} />
+	<meta property="og:type" content="profile" />
+	<meta property="og:site_name" content={contacts.name} />
+	<meta property="og:url" content={SITE} />
+	<meta property="og:title" content={title} />
+	<meta property="og:description" content={description} />
+	<meta property="og:image" content="{SITE}img/lukas.jpg" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="profile:first_name" content="Lukas" />
+	<meta property="profile:last_name" content="Ružauskas" />
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:title" content={title} />
+	<meta name="twitter:description" content={description} />
+	<meta name="twitter:image" content="{SITE}img/lukas.jpg" />
+	{@html `<script type="application/ld+json">${jsonLd}</script>`}
 	<link rel="preload" href={oxaniumLatin} as="font" type="font/woff2" crossorigin="anonymous" />
 	<link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin="anonymous" />
 </svelte:head>
@@ -168,7 +236,7 @@
 	<div class="grain" aria-hidden="true"></div>
 
 	<header class="brand">
-		<p class="eyebrow">Portfolio <span aria-hidden="true">//</span> Kaunas, LT</p>
+		<p class="eyebrow">{contacts.focus} <span aria-hidden="true">//</span> Kaunas, LT</p>
 		<h1><span class="first">{first}</span> <span class="last">{last}</span></h1>
 		<p class="tagline">{contacts.tagline}</p>
 	</header>
@@ -195,13 +263,13 @@
 		</div>
 	{/if}
 
-	<Panel id="career" index={indexOf('career')} title="Career" subtitle="Quest log — current first" open={openId === 'career'} onclose={closePanel}>
+	<Panel id="career" index={indexOf('career')} title="Career" open={openId === 'career'} onclose={closePanel}>
 		<CareerLog />
 	</Panel>
-	<Panel id="projects" index={indexOf('projects')} title="Projects" subtitle="Things I built, ran or shipped" open={openId === 'projects'} onclose={closePanel}>
+	<Panel id="projects" index={indexOf('projects')} title="Projects" open={openId === 'projects'} onclose={closePanel}>
 		<ProjectGrid />
 	</Panel>
-	<Panel id="resume" index={indexOf('resume')} title="Resume" subtitle="One page, current roles first" wide open={openId === 'resume'} onclose={closePanel}>
+	<Panel id="resume" index={indexOf('resume')} title="Resume" wide open={openId === 'resume'} onclose={closePanel}>
 		<ResumeViewer active={openId === 'resume'} />
 	</Panel>
 	<Panel id="contact" index={indexOf('contact')} title="Contact" open={openId === 'contact'} onclose={closePanel}>

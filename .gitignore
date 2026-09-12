@@ -3,6 +3,7 @@ node_modules
 /.preview
 /.preview-builds
 /.svelte-kit
+/.svelte-kit-preview
 /package
 .env
 .env.*

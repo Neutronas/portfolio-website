@@ -46,9 +46,15 @@ papers = Resume. Easter eggs (not in menu): photo frame = Biography panel, PC to
 - Dropped RectAreaLights (heavy shaders) for a point light; PCF shadows; smaller wood texture.
 - Bio images PNG→WebP (1.5 MB → 190 KB); fonts preloaded; after scene is ready, idle-prefetch bio images + resume.pdf.
 
+## SEO (2026-09-12)
+Targets: "Lukas Ruzauskas", "AI Product Engineer", "Agentic Coding".
+- Single title/description (app.html no longer duplicates them); OG/Twitter tags; JSON-LD @graph WebSite + ProfilePage + Person
+  (alternateName incl. ASCII "Lukas Ruzauskas", jobTitle AI Product Engineer, knowsAbout Agentic Coding).
+- Visible text: eyebrow "Agentic coding // Kaunas, LT", tagline leads with "AI product engineer".
+- Sitemap: home + resume PDF. After merge: submit sitemap in Google Search Console.
+
 ## Open / next ideas
-- Old routes `/careers`, `/biography`, `/projects` still exist (old light design) — delete or redirect once happy.
-- Old home components (`Hero`, `PathSelector`) now unused.
+- ~~Old routes~~ → now meta-refresh redirects to `/#career|#biography|#projects` (noindex, canonical home); old design code + gsap/leaflet/fraunces removed.
 - Optional: UI sounds (hover blip), more props (plant, headphones), OG image of the scene.
 
 ## Screenshot check (headless, WebGL via SwiftShader)

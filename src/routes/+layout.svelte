@@ -1,14 +1,11 @@
 <script lang="ts">
-	import '@fontsource-variable/fraunces';
 	import '@fontsource-variable/inter';
 	import '../app.css';
-	import PathNav from '$lib/components/PathNav.svelte';
 
 	let { children } = $props();
 </script>
 
 <a href="#main" class="skip-link">Skip to content</a>
-<PathNav />
 {@render children()}
 
 <style>

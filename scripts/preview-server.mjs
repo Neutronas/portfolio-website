@@ -61,7 +61,7 @@ function build() {
 	console.log('[preview] building…');
 	const child = spawn(join(ROOT, 'node_modules/.bin/vite'), ['build'], {
 		cwd: ROOT,
-		env: { ...process.env, BUILD_DIR: dir },
+		env: { ...process.env, BUILD_DIR: dir, SVELTEKIT_OUT_DIR: '.svelte-kit-preview' },
 		stdio: ['ignore', 'pipe', 'pipe']
 	});
 	let log = '';
