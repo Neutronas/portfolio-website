@@ -112,7 +112,7 @@
 			"id": "boardgames",
 			"year": 2026,
 			"title": "Board Game Printer",
-			"tags": ["node", "stripe", "pdf"],
+			"tags": ["node", "stripe"],
 			"summary": "Printable snakes & ladders for toddlers in 24 themes. Server-rendered A4 PDFs with the board, cut-out pawns and a die net. Pay what you want via Stripe, Minecraft theme free.",
 			"links": [{ "label": "Live", "href": "https://boardgames.ruzauskas.lt" }]
 		},
