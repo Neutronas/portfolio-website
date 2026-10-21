@@ -65,7 +65,7 @@
 				name: title,
 				description,
 				isPartOf: { '@id': `${SITE}#website` },
-				dateModified: '2026-09-12',
+				dateModified: '2026-10-21',
 				mainEntity: { '@id': `${SITE}#person` }
 			},
 			{
@@ -94,7 +94,7 @@
 				worksFor: { '@type': 'Organization', name: 'Dassault Systèmes' },
 				nationality: 'Lithuanian',
 				address: { '@type': 'PostalAddress', addressLocality: 'Kaunas', addressCountry: 'LT' },
-				sameAs: contacts.links.map((l) => l.href)
+				sameAs: [...contacts.links.map((l) => l.href), 'https://neutronas.eu/']
 			}
 		]
 	}).replace(/</g, '\\u003c');
@@ -192,6 +192,7 @@
 	/>
 	<meta name="theme-color" content="#08090c" />
 	<link rel="canonical" href={SITE} />
+	<link rel="alternate" type="text/plain" href="{SITE}llms.txt" title="Profile for AI assistants" />
 	<meta property="og:type" content="profile" />
 	<meta property="og:site_name" content={contacts.name} />
 	<meta property="og:url" content={SITE} />

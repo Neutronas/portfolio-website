@@ -29,6 +29,7 @@ const config = {
 			strict: true
 		}),
 		prerender: {
+			entries: ['*', '/llms.txt'],
 			handleHttpError: ({ path, referrer, message }) => {
 				// og.jpg is optional — add to /static/ when you have a portrait shot.
 				if (path.endsWith('og.jpg')) return;
