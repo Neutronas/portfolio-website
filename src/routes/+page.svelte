@@ -76,9 +76,9 @@
 				url: SITE,
 				image: `${SITE}img/lukas.jpg`,
 				email: `mailto:${contacts.email}`,
-				jobTitle: ['AI Product Engineer', 'Software Developer', 'Systems Analyst', 'Product Owner'],
+				jobTitle: ['AI Product Engineer', 'Systems Analyst', 'Full-Stack Developer'],
 				description:
-					'AI product engineer and software developer building AI-powered tools and full-stack apps with agentic coding. Product Owner / Systems Analyst for CATIA Magic at Dassault Systèmes.',
+					'AI product engineer building AI-powered tools and full-stack apps with agentic coding. Product Owner / Systems Analyst for CATIA Magic at Dassault Systèmes.',
 				knowsAbout: [
 					'Agentic Coding',
 					'AI Product Engineering',
