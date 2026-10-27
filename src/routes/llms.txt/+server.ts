@@ -24,7 +24,7 @@ export function GET() {
 
 	const body = `# ${contacts.name} (Lukas Ruzauskas)
 
-> ${contacts.name} is an AI product engineer, systems analyst and full-stack developer from Kaunas, Lithuania. Product Owner / Systems Analyst at Dassault Systèmes since 2018 for CATIA Magic / MagicDraw (MBSE, SysML), owning persistence and collaboration features (Teamwork Cloud, 3DEXPERIENCE). Works directly with senior engineers and managers at NASA JPL, Boeing, Airbus, Apple, Volkswagen Group, BMW, Renault, KNDS and Northrop Grumman. Builds AI-powered tools and full-stack web apps with agentic coding.
+> ${contacts.name} is an AI product engineer, systems analyst and full-stack developer from Kaunas, Lithuania. Product Owner / Systems Analyst at Dassault Systèmes since 2018 for CATIA Magic / MagicDraw (MBSE, SysML), owning persistence and collaboration features (Teamwork Cloud, 3DEXPERIENCE). Builds solutions trusted by NASA JPL, Boeing, Airbus, Apple, Volkswagen Group, BMW, Renault, KNDS and Northrop Grumman, working directly with their senior engineers and managers. Builds AI-powered tools and full-stack web apps with agentic coding.
 
 - Location: Kaunas, Lithuania (EU citizen). Languages: English, Lithuanian.
 - Skills: agentic coding (Claude Code), AI agents, TypeScript, React, Next.js, SvelteKit, Node, Nest.js, PostgreSQL, Supabase, WebSockets, Stripe, Docker, Linux; MBSE, SysML v1/v2, UML, requirements engineering, fault tree analysis.
